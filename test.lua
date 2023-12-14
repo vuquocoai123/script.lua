@@ -1,15 +1,13 @@
 getgenv().Setting = {
-    ["Team"] = "Marines", -- Start With Team Pirates, Marines
-    ["WhiteScreen"] = false, -- White Screen
-    ["FpsBoost"] = false, -- Fps Boost
-    ["AutoRejoin"] = true, -- AutoRejoin
-    ["TimeReset"] = 2, -- Time Reset Character
+    ["Team"] = "Marines",
+    ["WhiteScreen"] = false,
+    ["FpsBoost"] = false,
+    ["TimeReset"] = 4,
     ["ModeFarm"] = {
-        ["StopItemLegendary"] = true, -- Stop Item Legendary
-        ["SummonKillDarkbeard"] = true -- Summon And Kill Dark Beard
+        ["StopItemLegendary"] = true,
+        ["SummonKillDarkbeard"] = true
     },
 }
---// HIRIMI SOURCE - AUTO CHEST - HIRIMI HUB \\--
 
 --// White Screen
 if getgenv().Setting.WhiteScreen == true then
@@ -259,7 +257,7 @@ function EquipWeapon(ToolSe)
 end
  
 --// Save Setting
-	local foldername = "Hirimii Hub Auto Chest"
+	local foldername = "Apple Hub - Farm Chest"
 	local filename = foldername.."/Counter.json"
 	 
 	function saveSettings()
@@ -553,7 +551,7 @@ Name.BorderSizePixel = 0
 Name.Position = UDim2.new(0.204999998, 0, 0.0280000009, 0)
 Name.Size = UDim2.new(0, 309, 0, 42)
 Name.Font = Enum.Font.DenkOne
-Name.Text = "Hirimii Hub - Chest Farm"
+Name.Text = "Apple Hub - Farm Chest"
 Name.TextColor3 = Color3.fromRGB(255, 255, 255)
 Name.TextSize = 30.000
 
@@ -566,7 +564,7 @@ invite.BorderSizePixel = 0
 invite.Position = UDim2.new(0.272500008, 0, 0.195999995, 0)
 invite.Size = UDim2.new(0, 242, 0, 25)
 invite.Font = Enum.Font.DenkOne
-invite.Text = "https://discord.gg/sVacetQBjd"
+invite.Text = "https://discord.gg/JNAB9UDvCx"
 invite.TextColor3 = Color3.fromRGB(255, 255, 255)
 invite.TextSize = 19.000
 
@@ -735,7 +733,7 @@ dis.Text = "Copy Discord"
 dis.TextColor3 = Color3.fromRGB(255, 255, 255)
 dis.TextSize = 30.000
 dis.MouseButton1Down:Connnect(function()
-	setclipboard("https://discord.gg/sVacetQBjd")
+	setclipboard("https://discord.gg/JNAB9UDvCx")
 end)
 
 local MainStroke = Instance.new("UIStroke")
