@@ -521,7 +521,7 @@ logo.BorderColor3 = Color3.fromRGB(0, 0, 0)
 logo.BorderSizePixel = 0
 logo.Position = UDim2.new(0.0274999999, 0, 0.0560000017, 0)
 logo.Size = UDim2.new(0, 60, 0, 60)
-logo.Image = "http://www.roblox.com/asset/?id=14800987073"
+logo.Image = "Apple Hub"
 local MainStroke = Instance.new("UIStroke")
 MainStroke.Name = "BtnStroke"
 MainStroke.Parent = logo
