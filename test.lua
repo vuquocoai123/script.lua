@@ -1,73 +1,12 @@
-getgenv().Setting = {
-    ["Hunt"] = {
-        ["Team"] = "Pirates",
-        ["Min"] = 0,
-        ["Max"] = 30000000,
-        ["Webhook"] = true, 
-        ["Url"] = "https://discord.com/api/webhooks/1155320797867561091/98jhEvNhwKwihhk9OUM_k16YkQAPyg83aKapZnozkxyL5dATYtM98Iw_GRuypc3u9zk1"
-    },
-    ["Skip"] = {
-        ["V4"] = true,
-        ["Fruit"] = true,
-        ["FruitList"] = {
-            "Leopard",
-            "Venom",
-            "Dough",
-            "Portal"
-        }
-    },
-    ["Chat"] = {
-        ["Enabled"] = false,
-        ["List"] = {""},
-    },
-    ["Click"] = {
-        ["AlwaysClick"] = false,
-        ["FastClick"] = false
-    },
-    ["Another"] = {
-        ["V3"] = true,
-        ["CustomHealth"] = true,
-        ["Health"] = 12000,
-        ["V4"] = true,
-        ["LockCamera"] = false,
-        ["FPSBoots"] = false,
-        ["WhiteScreen"] = false,
-        ["BypassTp"] = true
-    },
-    ["SafeHealth"] = {
-        ["Health"] = 6000,
-        ["HighY"] = 1500
-    },
-    ["Melee"] = {
-        ["Enable"] = true,
-        ["Delay"] = 2.5,
-        ["Z"] = {["Enable"] = true, ["HoldTime"] = 1.25},
-        ["X"] = {["Enable"] = true, ["HoldTime"] = 0},
-        ["C"] = {["Enable"] = true, ["HoldTime"] = 0},
-        ["V"] = {["Enable"] = true, ["HoldTime"] = 0}
-    },
-    ["Fruit"] = {
-        ["Enable"] = true,
-        ["Delay"] = 2,
-        ["Z"] = {["Enable"] = true, ["HoldTime"] = 0},
-        ["X"] = {["Enable"] = true, ["HoldTime"] = 0},
-        ["C"] = {["Enable"] = true, ["HoldTime"] = 0},
-        ["V"] = {["Enable"] = true, ["HoldTime"] = 1.25},
-        ["F"] = {["Enable"] = false, ["HoldTime"] = 0}
-    },
-    ["Sword"] = {
-        ["Enable"] = false,
-        ["Delay"] = 1,
-        ["Z"] = {["Enable"] = true, ["HoldTime"] = 0},
-        ["X"] = {["Enable"] = true, ["HoldTime"] = 0}
-    },
-    ["Gun"] = {
-        ["Enable"] = false,
-        ["GunMode"] = false, 
-        ["Delay"] = 1.75,
-        ["Z"] = {["Enable"] = true, ["HoldTime"] = 0},
-        ["X"] = {["Enable"] = true, ["HoldTime"] = 0}
-    }
+_G.Team = "Pirates" --// Pirates or Marines
+_G.FruitList = {
+    "Leopard-Leopard",
+    "Venom-Venom",
+    "Dough-Dough",
+    "Portal-Portal"
+}
+_G.ChatList = {
+    ""
 }
 repeat task.wait() until game:IsLoaded()
 repeat task.wait() until game.Players
@@ -76,77 +15,717 @@ repeat task.wait() until game.Players.LocalPlayer:FindFirstChild("PlayerGui")
 repeat task.wait() until game.Players.LocalPlayer.PlayerGui:FindFirstChild("Main");
 --- Join Team
 if game:GetService("Players").LocalPlayer.PlayerGui.Main:FindFirstChild("ChooseTeam") then
-    repeat wait()
+    repeat task.wait()
         if game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("Main").ChooseTeam.Visible == true then
-            if getgenv().Setting.Hunt.Team == "Marines" then
-                for i,v in pairs(getconnections(game:GetService("Players").LocalPlayer.PlayerGui.Main.ChooseTeam.Container.Marines.Frame.ViewportFrame.TextButton.Activated)) do
+            if _G.Team == "Marines" then
+                for i, v in pairs(getconnections(game:GetService("Players").LocalPlayer.PlayerGui.Main.ChooseTeam.Container["Marines"].Frame.TextButton.Activated)) do
+                    for a, b in pairs(getconnections(game:GetService("UserInputService").TouchTapInWorld)) do
+                       b:Fire() 
+                    end
                     v.Function()
-                end
+                end 
             else
-                for i,v in pairs(getconnections(game:GetService("Players").LocalPlayer.PlayerGui.Main.ChooseTeam.Container.Pirates.Frame.ViewportFrame.TextButton.Activated)) do
+                for i, v in pairs(getconnections(game:GetService("Players").LocalPlayer.PlayerGui.Main.ChooseTeam.Container["Pirates"].Frame.TextButton.Activated)) do
+                    for a, b in pairs(getconnections(game:GetService("UserInputService").TouchTapInWorld)) do
+                       b:Fire() 
+                    end
                     v.Function()
-                end
+                end 
             end
         end
     until game.Players.LocalPlayer.Team ~= nil and game:IsLoaded()
 end
---- Check World/Tween + Bypass
-if game.PlaceId == 7449423635 then
-    World3 = true
-else
-    game.Players.LocalPlayer:Kick("Only Support BF Sea 3")
-end 
-if World3 then 
-    distbyp = 5000
-    island = {
-    ["Port Town"] = CFrame.new(-290.7376708984375, 6.729952812194824, 5343.5537109375),
-    ["Hydra Island"] = CFrame.new(5749.7861328125 + 50, 611.9736938476562, -276.2497863769531),
-    ["Mansion"] = CFrame.new(-12471.169921875 + 50, 374.94024658203, -7551.677734375),
-    ["Castle On The Sea"] = CFrame.new(-5085.23681640625 + 50, 316.5072021484375, -3156.202880859375),
-    ["Haunted Island"] = CFrame.new(-9547.5703125, 141.0137481689453, 5535.16162109375),
-    ["Great Tree"] = CFrame.new(2681.2736816406, 1682.8092041016, -7190.9853515625),
-    ["Candy Island"] = CFrame.new(-1106.076416015625, 13.016114234924316, -14231.9990234375),
-    ["Cake Island"] = CFrame.new(-1903.6856689453125, 36.70722579956055, -11857.265625),
-    ["Loaf Island"] = CFrame.new(-889.8325805664062, 64.72842407226562, -10895.8876953125),
-    ["Peanut Island"] = CFrame.new(-1943.59716796875, 37.012996673583984, -10288.01171875),
-    ["Cocoa Island"] = CFrame.new(147.35205078125, 23.642955780029297, -12030.5498046875),
-    ["Tiki Outpost"] = CFrame.new(-16234,9,416)
-    } 
-elseif World2 then 
-    distbyp = 3500
-    island = { 
-    a = CFrame.new(753.14288330078, 408.23559570313, -5274.6147460938),
-    b = CFrame.new(-5622.033203125, 492.19604492188, -781.78552246094),
-    c= CFrame.new(-11.311455726624, 29.276733398438, 2771.5224609375),
-    d= CFrame.new(-2448.5300292969, 73.016105651855, -3210.6306152344),
-    e=CFrame.new(-380.47927856445, 77.220390319824, 255.82550048828), 
-    f=CFrame.new(-3032.7641601563, 317.89672851563, -10075.373046875),
-    g=CFrame.new(6148.4116210938, 294.38687133789, -6741.1166992188),
-    h=CFrame.new(923.40197753906, 125.05712890625, 32885.875),
-    i=CFrame.new(-6127.654296875, 15.951762199402, -5040.2861328125),
-    }
-elseif World1 then 
-    distbyp = 1500
-    island = { 
-    a = CFrame.new(979.79895019531, 16.516613006592, 1429.0466308594), 
-    b = CFrame.new(-2566.4296875, 6.8556680679321, 2045.2561035156), 
-    c = CFrame.new(944.15789794922, 20.919729232788, 4373.3002929688), 
-    d = CFrame.new(-1181.3093261719, 4.7514905929565, 3803.5456542969), 
-    e =CFrame.new(-1612.7957763672, 36.852081298828, 149.12843322754), 
-    f = CFrame.new(-690.33081054688, 15.09425163269, 1582.2380371094) ,
-    g = CFrame.new(-4607.82275, 872.54248, -1667.55688), 
-    h = CFrame.new(-7952.31006, 5545.52832, -320.704956),
-    i = CFrame.new(-4914.8212890625, 50.963626861572, 4281.0278320313),
-    j = CFrame.new(-1427.6203613281, 7.2881078720093, -2792.7722167969),
-    k = CFrame.new(1347.8067626953, 104.66806030273, -1319.7370605469),
-    l = CFrame.new(5127.1284179688, 59.501365661621, 4105.4458007813),
-    m = CFrame.new(61163.8515625, 11.6796875, 1819.7841796875),
-    n = CFrame.new(-5247.7163085938, 12.883934020996, 8504.96875),
-    o =CFrame.new(4875.330078125, 5.6519818305969, 734.85021972656),
-    p = CFrame.new(-4813.0249, 903.708557, -1912.69055),
-    q = CFrame.new(-4970.21875, 717.707275, -2622.35449),
-    } 
+--- Load & Save Setting
+local foldername = "Apple Hub - Bounty"
+local filename = foldername.."/Setting.json"
+function saveSettings()
+    local HttpService = game:GetService("HttpService")
+    local json = HttpService:JSONEncode(_G)
+    if true then
+        if isfolder(foldername) then
+            if isfile(filename) then
+                writefile(filename, json)
+            else
+                writefile(filename, json)
+            end
+        else
+            makefolder(foldername)
+        end
+    end
 end
+function loadSettings()
+    local HttpService = game:GetService("HttpService")
+    if isfolder(foldername) then
+        if isfile(filename) then
+            _G = HttpService:JSONDecode(readfile(filename))
+        end
+    end
+end
+--- Normal Setting
+_G.TotalEarn = 0
+_G.Time = 0
+_G.StartHunt = true
+_G.MinBounty = 0
+_G.MaxBounty = 30000000
+_G.WebhookUrl = "Enter your webhook here"
+_G.UseWebhook = false
+_G.SkipV4 = true
+_G.SkipFruit = true
+_G.UseV3 = true
+_G.CustomHealthV3 = 95
+_G.CustomHealthEnableV3 = true
+_G.UseV4 = true
+_G.FastClick = false
+_G.AlwaysClick = true
+_G.Chat = false
+_G.LockCam = true
+_G.BypassTP = true
+_G.FpsBoost = false
+_G.WhiteScreen = false
+_G.SafeHealth = 30
+-- Weapons
+-- Melee
+_G.MeleeDelay = 3
+_G.UseMelee = true
+_G.HoldZMelee = 0
+_G.MeleeSkillZ = true
+_G.HoldXMelee = 0
+_G.MeleeSkillX = true
+_G.HoldCMelee = 0
+_G.MeleeSkillC = true
+_G.HoldVMelee = 0
+_G.MeleeSkillV = false
+-- Sword
+_G.SwordDelay = 2
+_G.UseSword = true
+_G.UseSwordMethod = true
+_G.HoldZSword = 1
+_G.SwordSkillZ = true
+_G.HoldXSword = 0
+_G.SwordSkillX = true
+-- Gun
+_G.GunDelay = 1
+_G.UseGun = true
+_G.UseGunMethod = false
+_G.HoldZGun = 0
+_G.GunSkillZ = true
+_G.HoldXGun = 0
+_G.GunSkillX = true
+-- Fruit
+_G.FruitDelay = 3
+_G.UseFruit = true
+_G.HoldZFruit = 0
+_G.FruitSkillZ = true
+_G.HoldXFruit = 0
+_G.FruitSkillX = true
+_G.HoldCFruit = 0
+_G.FruitSkillC = true
+_G.HoldVFruit = 0
+_G.FruitSkillV = true
+_G.HoldFFruit = 3
+_G.FruitSkillF = false
+--- Load
+loadSettings()
+--- Orion
+local OrionLib = loadstring(game:HttpGet("https://raw.githubusercontent.com/memaybeohub/Function-Scripts/main/OrionLib.lua"))()
+local Window = OrionLib:MakeWindow({Name = "Apple Hub - Bounty Farm", HidePremium = false, SaveConfig = true, ConfigFolder = "Apple Hub - Config"})
+--- Counter
+local MainTab = Window:MakeTab({
+	Name = "Status",
+	PremiumOnly = false
+})
+MainTab:AddButton({
+	Name = "Skip Player",
+	Callback = function()
+        SkipPlayer()
+  	end    
+})
+MainTab:AddButton({
+	Name = "Copy Link Discord",
+	Callback = function()
+        setclipboard("https://discord.gg/JNAB9UDvCx")
+  	end    
+})
+Earn = MainTab:AddParagraph("Earned","0")
+Total = MainTab:AddParagraph("Total Earned","0")
+Elapsed = MainTab:AddParagraph("Time","00:00:00")
+Current = MainTab:AddParagraph("Current Bounty","0")
+local SettingTab = Window:MakeTab({
+	Name = "Setting",
+	PremiumOnly = false
+})
+--- Hunt
+SettingTab:AddButton({
+	Name = "FPS Boost",
+	Callback = function(Value)
+		local removedecals = false
+        local g = game
+        local w = g.Workspace
+        local l = g.Lighting
+        local t = w.Terrain
+        t.WaterWaveSize = 0
+        t.WaterWaveSpeed = 0
+        t.WaterReflectance = 0
+        t.WaterTransparency = 0
+        l.GlobalShadows = false
+        l.FogEnd = 9e9
+        l.Brightness = 0
+        settings().Rendering.QualityLevel = "Level01"
+        for i, v in pairs(g:GetDescendants()) do
+            if v:IsA("Part") or v:IsA("Union") or v:IsA("CornerWedgePart") or v:IsA("TrussPart") then
+                v.Material = "Plastic"
+                v.Reflectance = 0
+            elseif v:IsA("Decal") or v:IsA("Texture") and removedecals then
+                v.Transparency = 1
+            elseif v:IsA("ParticleEmitter") or v:IsA("Trail") then
+                v.Lifetime = NumberRange.new(0)
+            elseif v:IsA("Explosion") then
+                v.BlastPressure = 1
+                v.BlastRadius = 1
+            elseif v:IsA("Fire") or v:IsA("SpotLight") or v:IsA("Smoke") or v:IsA("Sparkles") then
+                v.Enabled = false
+            elseif v:IsA("MeshPart") then
+                v.Material = "Plastic"
+                v.Reflectance = 0
+                v.TextureID = 10385902758728957
+            end
+        end
+        for i, e in pairs(l:GetChildren()) do
+            if e:IsA("BlurEffect") or e:IsA("SunRaysEffect") or e:IsA("ColorCorrectionEffect") or e:IsA("BloomEffect") or e:IsA("DepthOfFieldEffect") then
+                e.Enabled = false
+            end
+        end
+        
+        function ObjectRemvoe()
+            for i,v in pairs(workspace:GetDescendants()) do
+                if string.find(v.Name,"Tree") or string.find(v.Name,"House") then
+                    v:Destroy()
+                end
+            end
+        end
+        
+        function InvisibleObject()
+            for i,v in pairs(game:GetService("Workspace"):GetDescendants()) do
+                if  (v:IsA("Part") or v:IsA("MeshPart") or v:IsA("BasePart")) and v.Transparency then
+                    v.Transparency = 1
+                end
+            end
+        end
+        ObjectRemvoe()
+        InvisibleObject()
+    end    
+}) 
+SettingTab:AddParagraph("Hunt","Setting Hunt for local player")
+SettingTab:AddToggle({
+	Name = "Start Hunt",
+	Default = _G.StartHunt,
+	Callback = function(Value)
+		_G.StartHunt = Value
+	end    
+}) 
+SettingTab:AddTextbox({
+    Name = "Min Bounty Hunt",
+    Default = _G.MinBounty,
+    TextDisappear = true,
+    Callback = function(Value)
+        _G.MinBounty = Value
+    end
+})
+SettingTab:AddTextbox({
+    Name = "Max Bounty Target Hunt",
+    Default = _G.MaxBounty,
+    TextDisappear = true,
+    Callback = function(Value)
+        _G.MaxBounty = Value
+    end
+})
+-- Hook
+SettingTab:AddParagraph("Webhook","Webhook setting")
+SettingTab:AddTextbox({
+    Name = "Webhook",
+    Default = _G.WebhookUrl,
+    TextDisappear = true,
+    Callback = function(Value)
+        _G.WebhookUrl = Value
+    end
+})
+SettingTab:AddButton({
+	Name = "Test Webhook",
+	Callback = function()
+        wTest()
+  	end    
+})
+SettingTab:AddToggle({
+	Name = "Enable Webhook",
+	Default = _G.UseWebhook,
+	Callback = function(Value)
+		_G.UseWebhook = Value
+	end    
+}) 
+-- Skip
+SettingTab:AddParagraph("Skip","Skip setting")
+SettingTab:AddToggle({
+	Name = "V4",
+	Default = _G.SkipV4,
+	Callback = function(Value)
+		_G.SkipV4 = Value
+	end    
+}) 
+SettingTab:AddToggle({
+	Name = "Fruit",
+	Default = _G.SkipFruit,
+	Callback = function(Value)
+		_G.SkipFruit = Value
+	end    
+}) 
+-- Race
+SettingTab:AddParagraph("Use Race","Race setting")
+SettingTab:AddToggle({
+	Name = "Use V3",
+	Default = _G.UseV3,
+	Callback = function(Value)
+		_G.UseV3 = Value
+	end    
+}) 
+SettingTab:AddSlider({
+	Name = "Custom Health",
+	Min = 0,
+	Max = 100,
+	Default = _G.CustomHealthV3,
+	Color = Color3.fromRGB(255,255,255),
+	Increment = 1,
+	ValueName = "% Health",
+	Callback = function(Value)
+		_G.CustomHealthV3 = Value
+	end    
+})
+SettingTab:AddToggle({
+	Name = "Custom Health Enable",
+	Default = _G.CustomHealthEnableV3,
+	Callback = function(Value)
+		_G.CustomHealthEnableV3 = Value
+	end    
+}) 
+SettingTab:AddToggle({
+	Name = "Use V4",
+	Default = _G.UseV4,
+	Callback = function(Value)
+		_G.UseV4 = Value
+	end    
+}) 
+-- Click
+SettingTab:AddParagraph("Vitural User","About Player")
+SettingTab:AddToggle({
+	Name = "Fast Click",
+	Default = _G.FastClick,
+	Callback = function(Value)
+		_G.FastClick = Value
+	end    
+}) 
+SettingTab:AddToggle({
+	Name = "Always Click",
+	Default = _G.AlwaysClick,
+	Callback = function(Value)
+		_G.AlwaysClick = Value
+	end    
+}) 
+-- Another
+SettingTab:AddParagraph("Another","Can choose or not")
+SettingTab:AddToggle({
+	Name = "Chat",
+	Default = _G.Chat,
+	Callback = function(Value)
+		_G.Chat = Value
+	end    
+}) 
+SettingTab:AddToggle({
+	Name = "Lock Camera",
+	Default = _G.LockCam,
+	Callback = function(Value)
+		_G.LockCam = Value
+	end    
+}) 
+SettingTab:AddToggle({
+	Name = "Bypass TP",
+	Default = _G.BypassTP,
+	Callback = function(Value)
+		_G.BypassTP = Value
+	end    
+}) 
+SettingTab:AddToggle({
+	Name = "White Screen",
+	Default = _G.WhiteScreen,
+	Callback = function(Value)
+        _G.WhiteScreen = Value
+		game.RunService:Set3dRenderingEnabled(not Value)
+	end    
+}) 
+SettingTab:AddSlider({
+	Name = "Safe Health",
+	Min = 0,
+	Max = 100,
+	Default = _G.SafeHealth,
+	Color = Color3.fromRGB(255,255,255),
+	Increment = 1,
+	ValueName = "% Health",
+	Callback = function(Value)
+		_G.SafeHealth = Value
+	end    
+})
+-- Melee
+SettingTab:AddParagraph("Melee","Setting for Melee")
+SettingTab:AddSlider({
+	Name = "Delay",
+	Min = 0,
+	Max = 5,
+	Default = _G.MeleeDelay,
+	Color = Color3.fromRGB(255,255,255),
+	Increment = 1,
+	ValueName = "Second",
+	Callback = function(Value)
+		_G.MeleeDelay = Value
+	end    
+})
+SettingTab:AddToggle({
+	Name = "Use Melee",
+	Default = _G.UseMelee,
+	Callback = function(Value)
+		_G.UseMelee = Value
+	end    
+}) 
+SettingTab:AddSlider({
+	Name = "Hold Skill Z",
+	Min = 0,
+	Max = 5,
+	Default = _G.HoldZMelee,
+	Color = Color3.fromRGB(255,255,255),
+	Increment = 1,
+	ValueName = "Second",
+	Callback = function(Value)
+		_G.HoldZMelee = Value
+	end    
+})
+SettingTab:AddToggle({
+	Name = "Use Skill Z",
+	Default = _G.MeleeSkillZ,
+	Callback = function(Value)
+		_G.MeleeSkillZ = Value
+	end    
+}) 
+SettingTab:AddSlider({
+	Name = "Hold Skill X",
+	Min = 0,
+	Max = 5,
+	Default = _G.HoldXMelee,
+	Color = Color3.fromRGB(255,255,255),
+	Increment = 1,
+	ValueName = "Second",
+	Callback = function(Value)
+		_G.HoldXMelee = Value
+	end    
+})
+SettingTab:AddToggle({
+	Name = "Use Skill X",
+	Default = _G.MeleeSkillX,
+	Callback = function(Value)
+		_G.MeleeSkillX = Value
+	end    
+}) 
+SettingTab:AddSlider({
+	Name = "Hold Skill C",
+	Min = 0,
+	Max = 5,
+	Default = _G.HoldCMelee,
+	Color = Color3.fromRGB(255,255,255),
+	Increment = 1,
+	ValueName = "Second",
+	Callback = function(Value)
+		_G.HoldCMelee = Value
+	end    
+})
+SettingTab:AddToggle({
+	Name = "Use Skill C",
+	Default = _G.MeleeSkillC,
+	Callback = function(Value)
+		_G.MeleeSkillC = Value
+	end    
+}) 
+SettingTab:AddSlider({
+	Name = "Hold Skill V",
+	Min = 0,
+	Max = 5,
+	Default = _G.HoldVMelee,
+	Color = Color3.fromRGB(255,255,255),
+	Increment = 1,
+	ValueName = "Second",
+	Callback = function(Value)
+		_G.HoldVMelee = Value
+	end    
+})
+SettingTab:AddToggle({
+	Name = "Use Skill V",
+	Default = _G.MeleeSkillV,
+	Callback = function(Value)
+		_G.MeleeSkillV = Value
+	end    
+}) 
+--- Sword
+SettingTab:AddParagraph("Sword","Setting for Sword") 
+SettingTab:AddSlider({
+	Name = "Delay",
+	Min = 0,
+	Max = 5,
+	Default = _G.SwordDelay,
+	Color = Color3.fromRGB(255,255,255),
+	Increment = 1,
+	ValueName = "Second",
+	Callback = function(Value)
+		_G.SwordDelay = Value
+	end    
+})
+SettingTab:AddToggle({
+	Name = "Use Sword",
+	Default = _G.UseSword,
+	Callback = function(Value)
+		_G.UseSword = Value
+	end    
+}) 
+SettingTab:AddToggle({
+	Name = "Use Sword Method",
+	Default = _G.UseSwordMethod,
+	Callback = function(Value)
+		_G.UseSwordMethod = Value
+	end    
+}) 
+SettingTab:AddSlider({
+	Name = "Hold Skill Z",
+	Min = 0,
+	Max = 5,
+	Default = _G.HoldZSword,
+	Color = Color3.fromRGB(255,255,255),
+	Increment = 1,
+	ValueName = "Second",
+	Callback = function(Value)
+		_G.HoldZSword = Value
+	end    
+})
+SettingTab:AddToggle({
+	Name = "Use Skill Z",
+	Default = _G.SwordSkillZ,
+	Callback = function(Value)
+		_G.SwordSkillZ = Value
+	end    
+}) 
+SettingTab:AddSlider({
+	Name = "Hold Skill X",
+	Min = 0,
+	Max = 5,
+	Default = _G.HoldXSword,
+	Color = Color3.fromRGB(255,255,255),
+	Increment = 1,
+	ValueName = "Second",
+	Callback = function(Value)
+		_G.HoldXSword = Value
+	end    
+})
+SettingTab:AddToggle({
+	Name = "Use Skill X",
+	Default = _G.SwordSkillX,
+	Callback = function(Value)
+		_G.SwordSkillX = Value
+	end    
+}) 
+--- Gun
+SettingTab:AddParagraph("Gun","Setting for Gun") 
+SettingTab:AddSlider({
+	Name = "Delay",
+	Min = 0,
+	Max = 5,
+	Default = _G.GunDelay,
+	Color = Color3.fromRGB(255,255,255),
+	Increment = 1,
+	ValueName = "Second",
+	Callback = function(Value)
+		_G.GunDelay = Value
+	end    
+})
+SettingTab:AddToggle({
+	Name = "Use Gun",
+	Default = _G.UseGun,
+	Callback = function(Value)
+		_G.UseGun = Value
+	end    
+})
+SettingTab:AddToggle({
+	Name = "Use Gun Method",
+	Default = _G.UseGunMethod,
+	Callback = function(Value)
+		_G.UseGunMethod = Value
+	end    
+}) 
+SettingTab:AddSlider({
+	Name = "Hold Skill Z",
+	Min = 0,
+	Max = 5,
+	Default = _G.HoldZGun,
+	Color = Color3.fromRGB(255,255,255),
+	Increment = 1,
+	ValueName = "Second",
+	Callback = function(Value)
+		_G.HoldZGun = Value
+	end    
+})
+SettingTab:AddToggle({
+	Name = "Use Skill Z",
+	Default = _G.GunSkillZ,
+	Callback = function(Value)
+		_G.GunSkillZ = Value
+	end    
+}) 
+SettingTab:AddSlider({
+	Name = "Hold Skill X",
+	Min = 0,
+	Max = 5,
+	Default = _G.HoldXGun,
+	Color = Color3.fromRGB(255,255,255),
+	Increment = 1,
+	ValueName = "Second",
+	Callback = function(Value)
+		_G.HoldXGun = Value
+	end    
+})
+SettingTab:AddToggle({
+	Name = "Use Skill X",
+	Default = _G.GunSkillX,
+	Callback = function(Value)
+		_G.GunSkillX = Value
+	end    
+}) 
+-- Fruit
+SettingTab:AddParagraph("Fruit","Setting for Melee") 
+SettingTab:AddSlider({
+	Name = "Delay",
+	Min = 0,
+	Max = 5,
+	Default = _G.FruitDelay,
+	Color = Color3.fromRGB(255,255,255),
+	Increment = 1,
+	ValueName = "Second",
+	Callback = function(Value)
+		_G.FruitDelay = Value
+	end    
+})
+SettingTab:AddToggle({
+	Name = "Use Fruit",
+	Default = _G.UseFruit,
+	Callback = function(Value)
+		_G.UseFruit = Value
+	end    
+}) 
+SettingTab:AddSlider({
+	Name = "Hold Skill Z",
+	Min = 0,
+	Max = 5,
+	Default = _G.HoldZFruit,
+	Color = Color3.fromRGB(255,255,255),
+	Increment = 1,
+	ValueName = "Second",
+	Callback = function(Value)
+		_G.HoldZFruit = Value
+	end    
+})
+SettingTab:AddToggle({
+	Name = "Use Skill Z",
+	Default = _G.FruitSkillZ,
+	Callback = function(Value)
+		_G.FruitSkillZ = Value
+	end    
+}) 
+SettingTab:AddSlider({
+	Name = "Hold Skill X",
+	Min = 0,
+	Max = 5,
+	Default = _G.HoldXFruit,
+	Color = Color3.fromRGB(255,255,255),
+	Increment = 1,
+	ValueName = "Second",
+	Callback = function(Value)
+		_G.HoldXFruit = Value
+	end    
+})
+SettingTab:AddToggle({
+	Name = "Use Skill X",
+	Default = _G.FruitSkillX ,
+	Callback = function(Value)
+		_G.FruitSkillX = Value
+	end    
+}) 
+SettingTab:AddSlider({
+	Name = "Hold Skill C",
+	Min = 0,
+	Max = 5,
+	Default = _G.HoldCFruit,
+	Color = Color3.fromRGB(255,255,255),
+	Increment = 1,
+	ValueName = "Second",
+	Callback = function(Value)
+		_G.HoldCFruit = Value
+	end    
+})
+SettingTab:AddToggle({
+	Name = "Use Skill C",
+	Default = _G.FruitSkillC,
+	Callback = function(Value)
+		_G.FruitSkillC = Value
+	end    
+}) 
+SettingTab:AddSlider({
+	Name = "Hold Skill V",
+	Min = 0,
+	Max = 5,
+	Default = 0,
+	Color = Color3.fromRGB(255,255,255),
+	Increment = 1,
+	ValueName = "Second",
+	Callback = function(Value)
+		_G.HoldVFruit = Value
+	end    
+})
+SettingTab:AddToggle({
+	Name = "Use Skill V",
+	Default = false,
+	Callback = function(Value)
+		_G.UseSkillV = Value
+	end    
+}) 
+SettingTab:AddSlider({
+	Name = "Hold Skill F",
+	Min = 0,
+	Max = 5,
+	Default = 0,
+	Color = Color3.fromRGB(255,255,255),
+	Increment = 1,
+	ValueName = "Second",
+	Callback = function(Value)
+		_G.HoldFFruit = Value
+	end    
+})
+SettingTab:AddToggle({
+	Name = "Use Skill F",
+	Default = false,
+	Callback = function(Value)
+		_G.UseSkillF = Value
+	end    
+}) 
+function Notify(content)
+    content = tostring(content)
+    OrionLib:MakeNotification({
+        Name = "Apple Hub Auto Bounty",
+        Content = content,
+        Time = 5
+    })
+end
+--- Tween + Bypass
 local p = game.Players
 local lp = p.LocalPlayer
 
@@ -157,95 +736,126 @@ local webhook = {}
 
 getgenv().weapon = nil
 getgenv().targ = nil 
-getgenv().lasttarrget = nil
 getgenv().checked = {}
 getgenv().pl = p:GetPlayers()
-wait(1)
+getgenv().incheck = nil
 --- Tween / Bypass ---
-function bypass(Pos)   
-    if lp.Character:FindFirstChild("Head") and lp.Character:FindFirstChild("HumanoidRootPart") and lp.Character:FindFirstChild("Humanoid") then
-        dist = math.huge
-        is = nil
-        for i , v in pairs(island) do
-            if (Pos.Position-v.Position).magnitude < dist then
-                is = v 
-                dist = (Pos.Position-v.Position).magnitude 
-            end
-        end 
-        if is == nil then return; end
-        if lp:DistanceFromCharacter(Pos.Position) > distbyp then 
-            if (lp.Character.Head.Position-Pos.Position).magnitude > (is.Position-Pos.Position).magnitude then
-                if tween then
-                    tween:Destroy()
-                end
-                if (is.X == 61163.8515625 and is.Y ==11.6796875 and is.Z == 1819.7841796875) or is == CFrame.new(-12471.169921875 + 50, 374.94024658203, -7551.677734375) or is == CFrame.new(-5085.23681640625 + 50, 316.5072021484375, -3156.202880859375) or is == CFrame.new(5749.7861328125 + 50, 611.9736938476562, -276.2497863769531) then
-                    if tween then
-                       tween:Cancel()
-                    end
-                    repeat task.wait()
-                        lp.Character.HumanoidRootPart.CFrame = is  
-                    until lp.Character.PrimaryPart.CFrame == is   
-                    task.wait(0.1)
-                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("SetSpawnPoint")
-                else
-                    if not stopbypass then
-                        if tween then
-                           tween:Cancel()
-                        end
-                        repeat task.wait()
-                            lp.Character.HumanoidRootPart.CFrame = is  
-                        until lp.Character.PrimaryPart.CFrame == is  
-                        game:GetService("Players").LocalPlayer.Character:WaitForChild("Humanoid"):ChangeState(15)
-                        lp.Character:SetPrimaryPartCFrame(is)
-                        wait(0.1)
-                        lp.Character.Head:Destroy()
-                        wait(1)
-                        repeat task.wait()
-                            lp.Character.HumanoidRootPart.CFrame = is  
-                            lp.Character.PrimaryPart.CFrame = is  
-                        until lp.Character:FindFirstChild("Humanoid").Health > 0
-                        wait(0.5)
-                    end 
-                end
-            end
+local w = game.PlaceId
+if w == 2753915549 then
+    distbyp = 1500
+    gQ = {
+        Vector3.new(-7894.6201171875, 5545.49169921875, -380.246346191406),
+        Vector3.new(-4607.82275390625, 872.5422973632812, -1667.556884765625),
+        Vector3.new(61163.8515625, 11.759522438049316, 1819.7841796875),
+        Vector3.new(3876.280517578125, 35.10614013671875, -1939.3201904296875)
+    }
+elseif w == 4442272183 then
+    distbyp = 3500
+    gQ = {
+        Vector3.new(-288.46246337890625, 306.130615234375, 597.9988403320312),
+        Vector3.new(2284.912109375, 15.152046203613281, 905.48291015625),
+        Vector3.new(923.21252441406, 126.9760055542, 32852.83203125),
+        Vector3.new(-6508.5581054688, 89.034996032715, -132.83953857422)
+    }
+elseif w == 7449423635 then
+    distbyp = 7000
+    gQ = {
+        Vector3.new(-5058.77490234375, 314.5155029296875, -3155.88330078125),
+        Vector3.new(5756.83740234375, 610.4240112304688, -253.9253692626953),
+        Vector3.new(-12463.8740234375, 374.9144592285156, -7523.77392578125),
+        Vector3.new(28282.5703125, 14896.8505859375, 105.1042709350586),
+        Vector3.new(-11993.580078125, 334.7812805175781, -8844.1826171875),
+        Vector3.new(5314.58203125, 25.419387817382812, -125.94227600097656)
+    }
+else
+    lp:Kick("Game not supported!")
+end
+function bypass(is)                 
+    repeat task.wait()
+        lp.Character.HumanoidRootPart.CFrame = is  
+    until lp.Character.PrimaryPart.CFrame == is  
+    game:GetService("Players").LocalPlayer.Character:WaitForChild("Humanoid", 9):ChangeState(15)
+    lp.Character:SetPrimaryPartCFrame(is)
+    wait(0.1)
+    lp.Character.Head:Destroy()
+    repeat task.wait() until lp.Character:FindFirstChild("Humanoid").Health <= 0
+    repeat task.wait()
+        lp.Character.PrimaryPart.CFrame = is  
+    until lp.Character:FindFirstChild("Head") and lp.Character:FindFirstChild("Humanoid").Health > 0
+    wait(0.5)
+end 
+function getSpawn(wtf)
+    local a, b = nil, math.huge
+    for i,v in pairs(game.Workspace._WorldOrigin.PlayerSpawns:FindFirstChild(tostring(lp.Team)):GetChildren()) do
+        if tostring(v) ~= "Leviathan" and (v:GetModelCFrame().Position-wtf.Position).Magnitude < b then
+            table.insert(gQ,v)
+            a = v:GetModelCFrame()
+            b = (v:GetModelCFrame().Position-wtf.Position).Magnitude
         end
     end
+    return a
 end
+function getPortal(check2)
+    local check3 = check2.Position
+    local aM, aN = Vector3.new(0,0,0), math.huge
+    for _, aL in pairs(gQ) do
+        if (aL-check3).Magnitude < aN and aM ~= aL then
+            aM, aN = aL,  (aL-check3).Magnitude
+        end 
+    end
+    return aM
+end 
+function request(check1)
+    game.ReplicatedStorage.Remotes.CommF_:InvokeServer(unpack({"requestEntrance", check1}))
+end
+
+function calcpos(I, II) 
+    if not II then 
+        II = game.Players.LocalPlayer.Character.PrimaryPart.CFrame 
+    end 
+    return (Vector3.new(I.X, 0, I.Z)-Vector3.new(II.X, 0, II.Z)).Magnitude 
+end 
+function checkincombat()
+    return (game:GetService("Players").LocalPlayer.PlayerGui.Main.InCombat.Visible and game:GetService("Players").LocalPlayer.PlayerGui.Main.InCombat.Text and (string.find(string.lower(game:GetService("Players").LocalPlayer.PlayerGui.Main.InCombat.Text),"risk")))
+end 
 function to(Pos)
     pcall(function()
         if lp.Character:FindFirstChild("HumanoidRootPart") and lp.Character:FindFirstChild("Humanoid").Health > 0 then
-                Distance = (Pos.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
-                if not game.Players.LocalPlayer.Character.PrimaryPart:FindFirstChild("Hold") then
-                    local Hold = Instance.new("BodyVelocity", game.Players.LocalPlayer.Character.PrimaryPart)
-                    Hold.Name = "Hold"
-                    Hold.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
-                    Hold.Velocity = Vector3.new(0, 0, 0)
+            Distance = calcpos(game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame, Pos)
+            for a, b in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
+                if b:IsA"BasePart" then
+                    b.CanCollide = false
                 end
-                if game.Players.LocalPlayer.Character.Humanoid.Sit == true then
-                    game.Players.LocalPlayer.Character.Humanoid.Sit = false
-                end
-                if Distance < 250 then
-                    Speed = 400
-                elseif Distance < 1000 then
-                    Speed = 375
-                elseif Distance >= 1000 then
-                    Speed = 350
-                end
-                pcall(function()
-                    tween = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart,TweenInfo.new(Distance / Speed, Enum.EasingStyle.Linear),{CFrame = Pos})
-                    tween:Play()
-                end)
-                if game:GetService("Players").LocalPlayer.PlayerGui.Main.InCombat.Visible then
-                    if not string.find(string.lower(game:GetService("Players").LocalPlayer.PlayerGui.Main.InCombat.Text), "risk") then
-                        bypass(Pos)
-                    end
-                else
-                    bypass(Pos)
-                end
-                if game.Players.LocalPlayer.Character.Humanoid.Sit == true then
-                    game.Players.LocalPlayer.Character.Humanoid.Sit = false
-                end
-                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame.X, Pos.Y, game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame.Z)
+            end
+            if not game.Players.LocalPlayer.Character.Head:FindFirstChild("Rimus") then
+                local ngu = Instance.new("BodyVelocity", game.Players.LocalPlayer.Character.Head)
+                ngu.Name = "Rimus"
+                ngu.MaxForce = Vector3.new(0,math.huge,0)
+                ngu.Velocity = Vector3.new(0,0,0)
+            end
+            if game.Players.LocalPlayer.Character.Humanoid.Sit == true then
+                game.Players.LocalPlayer.Character.Humanoid.Sit = false
+            end
+            if Distance < 500 then
+                Speed = 400
+            elseif Distance < 1000 then
+                Speed = 375
+            elseif Distance >= 1000 then
+                Speed = 350
+            end
+            Portal = getPortal(Pos) 
+            Spawn = getSpawn(Pos)
+            if Distance > calcpos(Portal, Spawn) and Distance > calcpos(Portal, Pos) and calcpos(Portal,Spawn) <= 500 then
+                return request(Portal) 
+            end
+            if calcpos(Portal,Spawn) > 500 and _G.BypassTP and not checkincombat() and Distance > calcpos(Spawn, Pos) and calcpos(game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame, Spawn) > distbyp then
+                return bypass(Spawn)
+            end
+            pcall(function()
+                tween = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart,TweenInfo.new(Distance / Speed, Enum.EasingStyle.Linear),{CFrame = Pos})
+                tween:Play()
+            end)
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame.X, Pos.Y, game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame.Z)
         end
     end)
 end
@@ -267,7 +877,7 @@ function Ken()
     end
 end
 --- Sent Key To Cilent ---
-function down(use,l)
+function down(use)
     pcall(function()
         game:GetService("VirtualInputManager"):SendKeyEvent(true,use,false,game.Players.LocalPlayer.Character.HumanoidRootPart)
         task.wait(l)
@@ -289,95 +899,30 @@ function equip(tooltip)
     end
     return false
 end
+function EquipWeapon(Tool)
+    pcall(
+        function()
+            if game.Players.LocalPlayer.Backpack:FindFirstChild(Tool) then
+                local ToolHumanoid = game.Players.LocalPlayer.Backpack:FindFirstChild(Tool)
+                ToolHumanoid.Parent = lp.Character
+            end
+        end
+    )
+end
+function EquipWeaponTool(Tool)
+    for _, item in pairs(lp.Backpack:GetChildren()) do
+        if item:IsA("Tool") and item.ToolTip == Tool then
+            item.Parent = lp.Character
+            return true
+        end
+    end
+    return false
+end
 --- Click ---
 function Click()
-    game:GetService'VirtualUser':CaptureController()
-    game:GetService'VirtualUser':Button1Down(Vector2.new(0,0,0,0))
+    game:GetService("VirtualUser"):CaptureController()
+    game:GetService("VirtualUser"):Button1Down(Vector2.new(0,1,0,1))
 end
---- No Clip ---
-spawn(function()
-    while game:GetService("RunService").Stepped:wait() do
-        pcall(function()
-            if true then
-                local character = game.Players.LocalPlayer.Character
-                for _, v in pairs(character:GetChildren()) do
-                    if v:IsA("BasePart") then
-                        v.CanCollide = false
-                    end
-                end
-            end
-        end)
-    end
-end)
---- Boots FPS ---
-if getgenv().Setting.Another.FPSBoots then
-    local removedecals = false
-    local g = game
-    local w = g.Workspace
-    local l = g.Lighting
-    local t = w.Terrain
-    t.WaterWaveSize = 0
-    t.WaterWaveSpeed = 0
-    t.WaterReflectance = 0
-    t.WaterTransparency = 0
-    l.GlobalShadows = false
-    l.FogEnd = 9e9
-    l.Brightness = 0
-    settings().Rendering.QualityLevel = "Level01"
-    for i, v in pairs(g:GetDescendants()) do
-        if v:IsA("Part") or v:IsA("Union") or v:IsA("CornerWedgePart") or v:IsA("TrussPart") then
-            v.Material = "Plastic"
-            v.Reflectance = 0
-        elseif v:IsA("Decal") or v:IsA("Texture") and removedecals then
-            v.Transparency = 1
-        elseif v:IsA("ParticleEmitter") or v:IsA("Trail") then
-            v.Lifetime = NumberRange.new(0)
-        elseif v:IsA("Explosion") then
-            v.BlastPressure = 1
-            v.BlastRadius = 1
-        elseif v:IsA("Fire") or v:IsA("SpotLight") or v:IsA("Smoke") or v:IsA("Sparkles") then
-            v.Enabled = false
-        elseif v:IsA("MeshPart") then
-            v.Material = "Plastic"
-            v.Reflectance = 0
-            v.TextureID = 10385902758728957
-        end
-    end
-    for i, e in pairs(l:GetChildren()) do
-        if e:IsA("BlurEffect") or e:IsA("SunRaysEffect") or e:IsA("ColorCorrectionEffect") or e:IsA("BloomEffect") or e:IsA("DepthOfFieldEffect") then
-            e.Enabled = false
-        end
-    end
-    end
-    
-    function ObjectRemvoe()
-        for i,v in pairs(workspace:GetDescendants()) do
-            if string.find(v.Name,"Tree") or string.find(v.Name,"House") then
-                v:Destroy()
-            end
-        end
-    end
-    
-    function InvisibleObject()
-    for i,v in pairs(game:GetService("Workspace"):GetDescendants()) do
-        if  (v:IsA("Part") or v:IsA("MeshPart") or v:IsA("BasePart")) and v.Transparency then
-            v.Transparency = 1
-        end
-    end
-    spawn(function()
-        pcall(function()
-            game.ReplicatedStorage.Effect.Container.Death:Destroy()
-            game.ReplicatedStorage.Effect.Container.Respawn:Destroy()
-            game.ReplicatedStorage.Effect.Container.Hit:Destroy()
-        end)
-    end)
-    ObjectRemvoe()
-    InvisibleObject()
-end
---- White Screen ---
-if getgenv().Setting.Another.WhiteScreen then
-    game.RunService:Set3dRenderingEnabled(false)
-end	
 --- Check Fruit
 function hasValue(array, targetString)
     for _, value in ipairs(array) do
@@ -388,7 +933,7 @@ function hasValue(array, targetString)
     return false
 end
 --- Fast Attack
-if getgenv().Setting.Click.FastClick then
+if _G.FastClick then
     local CameraShaker = require(game.ReplicatedStorage.Util.CameraShaker)
     CameraShaker:Stop()
     fastattack = true
@@ -424,6 +969,8 @@ if getgenv().Setting.Click.FastClick then
         end)
     end)
 else
+    local CameraShaker = require(game.ReplicatedStorage.Util.CameraShaker)
+    CameraShaker:Stop()
     CombatFrameworkR = require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework)
     y = debug.getupvalues(CombatFrameworkR)[2]
     spawn(function()
@@ -442,15 +989,6 @@ else
             end
         end)
     end)
-end
---- Circle
-local radius = 25
-local speedCircle = 30
-local angle = 0
-local yTween = 5
-local function getNextPosition(center)
-    angle = angle + speedCircle
-    return center + Vector3.new(math.sin(math.rad(angle)) * radius, yTween, math.cos(math.rad(angle)) * radius)
 end
 --- Hop Server ---
 spawn(function()
@@ -527,93 +1065,100 @@ function HopServer(bO)
             getgenv().Loaded = true
         end
         while not Hop() do
-            wait()
+            task.wait()
         end
     end)
 end
 --- Skip Player
 function SkipPlayer()
     getgenv().killed = getgenv().targ 
-    table.insert(getgenv().checked, getgenv().targ)
+    task.wait()
+    table.insert(getgenv().checked, getgenv().killed)
     getgenv().targ = nil
     target()
 end
+--- Circular Tween
+local radius = 15
+local angle = 0
+function getNextPosition(center)
+    angle = angle + 20
+    return center + Vector3.new(math.sin(math.rad(angle)) * radius, 15, math.cos(math.rad(angle)) * radius)
+end
 --- Main
+task.wait(0.5)
 function target() 
     pcall(function()
-        if not starthop then
-            d = math.huge
-            p = nil
-            getgenv().targ = nil
-            for i, v in pairs(game.Players:GetPlayers()) do 
-                if game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 1") and v:DistanceFromCharacter(game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 1").Position) < 5000 then
-                    print("Raider")
-                else
-                    if v:FindFirstChild("Team") and v.Team ~= nil and (not (tostring(lp.Team) == "Marines" and game.Players.LocalPlayer.Team ~= v.Team) or tostring(lp.Team) == "Pirates") then
-                        if v and v:FindFirstChild("Data") and ((getgenv().Setting.Skip.Fruit and hasValue(getgenv().Setting.Skip.FruitList, v.Data.DevilFruit.Value) == false) or not getgenv().Setting.Skip.Fruit) then
-                            if v ~= lp and v ~= getgenv().targ and (v.Character:FindFirstChild("HumanoidRootPart").CFrame.Position - game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart").CFrame.Position).Magnitude < d and hasValue(getgenv().checked, v) == false and v.Character.HumanoidRootPart.CFrame.Y <= 12000 then
-                                if (tonumber(game.Players.LocalPlayer.Data.Level.Value) - 250) < v.Data.Level.Value  then
-                                    if v.leaderstats["Bounty/Honor"].Value >= getgenv().Setting.Bounty.Min and v.leaderstats["Bounty/Honor"].Value <= getgenv().Setting.Bounty.Max then 
-                                        if (getgenv().Setting.Skip.V4 and not v.Character:FindFirstChild("RaceTransformed")) or not getgenv().Setting.Skip.V4 then
-                                            if not (game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 1") and v:DistanceFromCharacter(game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 1").Position) < 10000) then
-                                                p = v 
-                                                d = (v.Character.HumanoidRootPart.CFrame.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame.Position).Magnitude 
-                                                if getgenv().Setting.Chat.Enabled then
-                                                    game:GetService("ReplicatedStorage"):WaitForChild("DefaultChatSystemChatEvents"):FindFirstChild("SayMessageRequest"):FireServer(getgenv().Setting.Chat.List[math.random(0, #getgenv().Setting.Chat.List)], "All")
-                                                end 
-                                            end
+        d = math.huge
+        p = nil
+        getgenv().targ = nil
+        for i, v in pairs(game.Players:GetPlayers()) do 
+            if v.Team ~= nil and (tostring(lp.Team) == "Pirates" or (tostring(v.Team) == "Pirates" and tostring(lp.Team) ~= "Pirates")) then
+                if v and v:FindFirstChild("Data") and ((_G.SkipFruit and hasValue(_G.FruitList, v.Data.DevilFruit.Value) == false) or not _G.SkipFruit) then
+                    if v ~= lp and v ~= getgenv().targ and (v.Character:FindFirstChild("HumanoidRootPart").CFrame.Position - game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart").CFrame.Position).Magnitude < d and hasValue(getgenv().checked, v) == false and v.Character.HumanoidRootPart.CFrame.Y <= 12000 then
+                        if (tonumber(game.Players.LocalPlayer.Data.Level.Value) - 250) < v.Data.Level.Value and v.Data.Level.Value > 20 then
+                            if v.leaderstats["Bounty/Honor"].Value >= tonumber(_G.MinBounty) and v.leaderstats["Bounty/Honor"].Value <= tonumber(_G.MaxBounty) and not hopserver then 
+                                if (_G.SkipV4 and not v.Character:FindFirstChild("RaceTransformed")) or not _G.SkipV4 then
+                                    if calcpos(getSpawn(v.Character.HumanoidRootPart.CFrame), v.Character.HumanoidRootPart.CFrame) < distbyp then
+                                        p = v 
+                                        d = (v.Character.HumanoidRootPart.CFrame.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame.Position).Magnitude 
+                                        if _G.Chat then
+                                            game:GetService("ReplicatedStorage"):WaitForChild("DefaultChatSystemChatEvents"):FindFirstChild("SayMessageRequest"):FireServer(_G.ChatList[math.random(0, #_G.ChatList)], "All")
                                         end
                                     end
                                 end
-                            end 
+                            end
                         end
-                    end
+                    end 
                 end
-            end 
-            if p == nil then hopserver = true end 
-            getgenv().targ = p
-        end
+            end
+        end 
+        if p == nil then hopserver = true end 
+        getgenv().targ = p
     end)
 end
 spawn(function()
-    while wait() do
+    while task.wait() do
         pcall(function()
-            if (getgenv().targ.Character.HumanoidRootPart.CFrame.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame.Position).Magnitude < 40 then
-                Ken()
-            end
+	        if _G.StartHunt then
+                if getgenv().targ and getgenv().targ.Character and (getgenv().targ.Character.HumanoidRootPart.CFrame.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame.Position).Magnitude < 40 then
+                    Ken()
+                end
+	        end
         end)
     end
 end)
-gunmethod = getgenv().Setting.Gun.NewGunMode
-local melee, gun, sword, fruit
 spawn(function()
     while task.wait() do
         pcall(function()
-            if getgenv().targ.Character:FindFirstChild("HumanoidRootPart") and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
-                if (getgenv().targ.Character:WaitForChild("HumanoidRootPart").CFrame.Position - game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart").CFrame.Position).Magnitude < 40 then 
-                    if not gunmethod then
-                        if getgenv().Setting.Melee.Enable then
-                            getgenv().weapon = "Melee"
-                            wait(getgenv().Setting.Melee.Delay)
-                        end
-                        if getgenv().Setting.Fruit.Enable then
-                            getgenv().weapon = "Blox Fruit"
-                            wait(getgenv().Setting.Fruit.Delay)
-                        end
-                        if getgenv().Setting.Sword.Enable then
-                            getgenv().weapon = "Sword"
-                            wait(getgenv().Setting.Sword.Delay)
-                        end
-                        if getgenv().Setting.Gun.Enable then
-                            getgenv().weapon = "Gun"
-                            wait(getgenv().Setting.Gun.Delay)
-                        end
-                    else
-                        for i, v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
-                            if v.ToolTip == "Melee" then
-                                v.Parent = game.Players.LocalPlayer.Character
-                            elseif v.ToolTip == "Gun"  then
-                                v.Parent = game.Players.LocalPlayer.Character
+            if _G.StartHunt then
+                if getgenv().targ.Character:FindFirstChild("HumanoidRootPart") and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+                    if (getgenv().targ.Character:WaitForChild("HumanoidRootPart").CFrame.Position - game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart").CFrame.Position).Magnitude < 40 then 
+                        if _G.UseGunMethod and not _G.UseSwordMethod then
+                            EquipWeaponTool("Melee")
+                            EquipWeaponTool("Gun") 
+                        elseif not _G.UseGunMethod and _G.UseSwordMethod then
+                            EquipWeaponTool("Melee")
+                            EquipWeaponTool("Sword") 
+                        elseif _G.UseGunMethod and _G.UseSwordMethod then
+                            EquipWeaponTool("Melee")
+                            EquipWeaponTool("Sword")
+                            EquipWeaponTool("Gun") 
+                        else
+                            if _G.UseMelee then
+                                getgenv().weapon = "Melee"
+                                task.wait(_G.MeleeDelay)
+                            end
+                            if _G.UseSword then
+                                getgenv().weapon = "Sword"
+                                task.wait(_G.SwordDelay)
+                            end
+                            if _G.UseGun then
+                                getgenv().weapon = "Gun"
+                                task.wait(_G.GunDelay)
+                            end
+                            if _G.UseFruit then
+                                getgenv().weapon = "Blox Fruit"
+                                task.wait(_G.FruitDelay)
                             end
                         end
                     end
@@ -625,196 +1170,266 @@ end)
 spawn(function()
     while task.wait() do 
         pcall(function()
-            if game:GetService("Players").LocalPlayer.PlayerGui.Main.PvpDisabled.Visible == true then
-                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("EnablePvp")
-            end
-            if getgenv().targ ~= nil and getgenv().targ.Character and (getgenv().targ.Character.HumanoidRootPart.CFrame.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame.Position).Magnitude < 50 then
-                buso()
-                if getgenv().Setting.Another.V3 then
-                    if getgenv().Setting.Another.CustomHealth and lp.Character.Humanoid.Health <= getgenv().Setting.Another.Health then
-                        down("T",0.1)
+	        if _G.StartHunt then
+                if game:GetService("Players").LocalPlayer.PlayerGui.Main.PvpDisabled.Visible == true then
+                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("EnablePvp")
+                end
+                if getgenv().targ ~= nil and getgenv().targ.Character and (getgenv().targ.Character.HumanoidRootPart.CFrame.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame.Position).Magnitude < 60 then
+                    buso()
+                    if _G.UseV3 then
+                        if _G.CustomHealthEnableV3 and lp.Character.Humanoid.Health <= lp.Character.Humanoid.MaxHealth * (_G.CustomHealthV3/100) then
+                            l = 0.1
+                            down("T")
+                        end
+                    end
+                    if _G.UseV4 then
+                        l = 0.1
+                        down("Y")
+                    end  
+                    for i, v in pairs(game.Players.LocalPlayer.PlayerGui.Notifications:GetChildren()) do 
+                        local gay = v:GetChildren() 
+                        if v:IsA("TextLabel") and (string.find(string.lower(v.Text), "player") or string.find(string.lower(v.Text), "người chơi")) then 
+                            SkipPlayer()
+                            v:Destroy()
+                            Notify("PVP Dislable")
+                        end
+                    end 
+                end
+	        end
+        end)
+    end
+end)
+spawn(function()
+    while task.wait() do
+        if _G.StartHunt then
+            pcall(function()
+                if getgenv().targ ~= nil and (getgenv().targ.Character:WaitForChild("HumanoidRootPart").CFrame.Position - game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart").CFrame.Position).Magnitude < 20 then 
+                    task.wait(1)
+                    if game:GetService("Players").LocalPlayer.PlayerGui.Main.SafeZone.Visible == true then
+                        SkipPlayer()
+                        Notify("Player In Safe Zone")
+                    end 
+                end
+            end)
+        end
+    end
+end)
+-- spawn sea beast
+spawn(function()
+    while task.wait() do
+        if _G.StartHunt then
+            if getgenv().targ == nil or not getgenv().targ or not getgenv().targ.Character then target() end
+            if getgenv().targ == nil then hopserver = true end 
+            pcall(function()
+                if getgenv().targ.Character:FindFirstChild("HumanoidRootPart") and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+                    if (getgenv().targ.Character:WaitForChild("HumanoidRootPart").CFrame.Position - game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart").CFrame.Position).Magnitude < 40 then 
+                        spawn(function()
+                            if not _G.UseGunMethod and not _G.UseSwordMethod then
+                                EquipWeapon("Summon Sea Beast")
+                                equip(getgenv().weapon)
+                                for i, v in pairs(game.Players.LocalPlayer.Character:GetChildren()) do 
+                                    if v:IsA("Tool") and v.ToolTip == "Melee" then
+                                        if _G.UseMelee then
+                                            if game.Players.LocalPlayer.PlayerGui.Main.Skills[v.Name]:FindFirstChild("Z").Cooldown.AbsoluteSize.X <= 0 and _G.MeleeSkillZ then	
+                                                l = _G.HoldZMelee
+                                                down("Z")
+                                            elseif game.Players.LocalPlayer.PlayerGui.Main.Skills[v.Name]:FindFirstChild("X").Cooldown.AbsoluteSize.X <= 0 and _G.MeleeSkillX then	
+                                                l = _G.HoldXMelee
+                                                down("X")
+                                            elseif game.Players.LocalPlayer.PlayerGui.Main.Skills[v.Name]:FindFirstChild("C").Cooldown.AbsoluteSize.X <= 0 and _G.MeleeSkillC then	
+                                                l = _G.HoldCMelee
+                                                down("C")
+                                            elseif _G.MeleeSkillV then
+                                                if game.Players.LocalPlayer.PlayerGui.Main.Skills[v.Name]:FindFirstChild("V").Cooldown.AbsoluteSize.X <= 0 then	
+                                                    l = _G.HoldVMelee
+                                                    down("V")
+                                                else 
+                                                    Click()
+                                                end
+                                            else 
+                                                Click()
+                                            end
+                                        end
+                                    elseif v:IsA("Tool") and v.ToolTip == "Gun" then
+                                        if _G.UseGun then
+                                            if game.Players.LocalPlayer.PlayerGui.Main.Skills[v.Name]:FindFirstChild("Z").Cooldown.AbsoluteSize.X <= 0 and _G.GunSkillZ then	
+                                                l = _G.HoldZGun
+                                                down("Z")
+                                            elseif game.Players.LocalPlayer.PlayerGui.Main.Skills[v.Name]:FindFirstChild("X").Cooldown.AbsoluteSize.X <= 0 and _G.GunSkillX then	
+                                                l = _G.HoldXGun
+                                                down("X")
+                                            else
+                                                Click()
+                                            end
+                                        end
+                                    elseif v:IsA("Tool") and v.ToolTip == "Sword" then
+                                        if _G.UseSword then
+                                            if game.Players.LocalPlayer.PlayerGui.Main.Skills[v.Name]:FindFirstChild("Z").Cooldown.AbsoluteSize.X <= 0 and _G.SwordSkillZ then	
+                                                l = _G.HoldZSword
+                                                down("Z")
+                                            elseif game.Players.LocalPlayer.PlayerGui.Main.Skills[v.Name]:FindFirstChild("X").Cooldown.AbsoluteSize.X <= 0 and _G.SwordSkillX then	
+                                                l = _G.HoldXSword
+                                                down("X")
+                                            else
+                                                Click()
+                                            end
+                                        end
+                                    elseif v:IsA("Tool") and v.ToolTip == "Blox Fruit" then
+                                        if _G.UseFruit then
+                                            if game.Players.LocalPlayer.PlayerGui.Main.Skills[v.Name]:FindFirstChild("Z").Cooldown.AbsoluteSize.X <= 0 and _G.FruitSkillZ then	
+                                                l = _G.HoldZFruit
+                                                down("Z")
+                                            elseif game.Players.LocalPlayer.PlayerGui.Main.Skills[v.Name]:FindFirstChild("X").Cooldown.AbsoluteSize.X <= 0 and _G.FruitSkillX then	
+                                                l = _G.HoldXFruit
+                                                down("X")
+                                            elseif game.Players.LocalPlayer.PlayerGui.Main.Skills[v.Name]:FindFirstChild("C").Cooldown.AbsoluteSize.X <= 0 and _G.FruitSkillC then	
+                                                l = _G.HoldCFruit
+                                                down("C")
+                                            elseif game.Players.LocalPlayer.PlayerGui.Main.Skills[v.Name]:FindFirstChild("V").Cooldown.AbsoluteSize.X <= 0 and _G.FruitSkillV then	
+                                                l = _G.HoldVFruit
+                                                down("V")
+                                            elseif _G.FruitSkillF then
+                                                if game.Players.LocalPlayer.PlayerGui.Main.Skills[v.Name]:FindFirstChild("F").Cooldown.AbsoluteSize.X <= 0 then	
+                                                    l = _G.HoldFFruit
+                                                    down("F")
+                                                end
+                                            else
+                                                Click()
+                                            end
+                                        end
+                                    end
+                                end
+                            elseif _G.UseGunMethod or _G.UseSwordMethod then
+                                if _G.UseMelee then
+                                    if _G.MeleeSkillZ then	
+                                        l = _G.HoldZMelee
+                                        down("Z")
+                                    elseif _G.MeleeSkillX then	
+                                        l = _G.HoldXMelee
+                                        down("X")
+                                    elseif _G.MeleeSkillC then	
+                                        l = _G.HoldCMelee
+                                        down("C")
+                                    elseif _G.MeleeSkillV then	
+                                        l = _G.HoldVMelee
+                                        down("V")
+                                    end
+                                end
+                                Click()
+                            end
+                        end)
                     end
                 end
-                if getgenv().Setting.Another.V4 then
-                    down("Y",0.1)
-                end   
-            end
-        end)
+            end)
+        end
     end
 end)
-spawn(function()
-    while task.wait() do
-        if getgenv().targ == nil or not getgenv().targ or not getgenv().targ.Character then target() end
-        if getgenv().targ == nil then hopserver = true end 
-        pcall(function()
-            if getgenv().targ.Character:FindFirstChild("HumanoidRootPart") and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
-                if (getgenv().targ.Character:WaitForChild("HumanoidRootPart").CFrame.Position - game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart").CFrame.Position).Magnitude < 40 then 
-                    spawn(function()
-                        if not gunmethod then
-                            equip(getgenv().weapon)
-                            for i, v in pairs(game.Players.LocalPlayer.Character:GetChildren()) do 
-                                if v:IsA("Tool") and v.ToolTip == "Melee" then
-                                    if getgenv().Setting.Melee.Enable then
-                                        if game.Players.LocalPlayer.PlayerGui.Main.Skills[v.Name]:FindFirstChild("Z").Cooldown.AbsoluteSize.X <= 0 and getgenv().Setting.Melee.Z.Enable then	
-                                            down("Z",getgenv().Setting.Melee.Z.HoldTime)
-                                        elseif game.Players.LocalPlayer.PlayerGui.Main.Skills[v.Name]:FindFirstChild("X").Cooldown.AbsoluteSize.X <= 0 and getgenv().Setting.Melee.X.Enable then	
-                                            down("X",getgenv().Setting.Melee.X.HoldTime)
-                                        elseif game.Players.LocalPlayer.PlayerGui.Main.Skills[v.Name]:FindFirstChild("C").Cooldown.AbsoluteSize.X <= 0 and getgenv().Setting.Melee.C.Enable then	
-                                            down("C",getgenv().Setting.Melee.C.HoldTime)
-                                        elseif game.Players.LocalPlayer.PlayerGui.Main.Skills[v.Name]:FindFirstChild("V").Cooldown.AbsoluteSize.X <= 0 and getgenv().Setting.Melee.V.Enable then	
-                                            down("V",getgenv().Setting.Melee.V.HoldTime)
-                                        else
-                                            Click()
-                                        end
-                                    end
-                                elseif v:IsA("Tool") and v.ToolTip == "Gun" then
-                                    if getgenv().Setting.Gun.Enable then
-                                        if game.Players.LocalPlayer.PlayerGui.Main.Skills[v.Name]:FindFirstChild("Z").Cooldown.AbsoluteSize.X <= 0 and getgenv().Setting.Gun.Z.Enable then	
-                                            down("Z",getgenv().Setting.Gun.Z.HoldTime)
-                                        elseif game.Players.LocalPlayer.PlayerGui.Main.Skills[v.Name]:FindFirstChild("X").Cooldown.AbsoluteSize.X <= 0 and getgenv().Setting.Gun.X.Enable then	
-                                            down("X",getgenv().Setting.Gun.X.HoldTime)
-                                        else
-                                            Click()
-                                        end
-                                    end
-                                elseif v:IsA("Tool") and v.ToolTip == "Sword" then
-                                    if getgenv().Setting.Sword.Enable then
-                                        if game.Players.LocalPlayer.PlayerGui.Main.Skills[v.Name]:FindFirstChild("Z").Cooldown.AbsoluteSize.X <= 0 and getgenv().Setting.Sword.Z.Enable then	
-                                            down("Z",getgenv().Setting.Sword.Z.HoldTime)
-                                        elseif game.Players.LocalPlayer.PlayerGui.Main.Skills[v.Name]:FindFirstChild("X").Cooldown.AbsoluteSize.X <= 0 and getgenv().Setting.Sword.X.Enable then	
-                                            down("X",getgenv().Setting.Sword.X.HoldTime)
-                                        else
-                                            Click()
-                                        end
-                                    end
-                                elseif v:IsA("Tool") and v.ToolTip == "Blox Fruit" then
-                                    if getgenv().Setting.Fruit.Enable then
-                                        if game.Players.LocalPlayer.PlayerGui.Main.Skills[v.Name]:FindFirstChild("Z").Cooldown.AbsoluteSize.X <= 0 and getgenv().Setting.Fruit.Z.Enable then	
-                                            down("Z",getgenv().Setting.Fruit.Z.HoldTime)
-                                        elseif game.Players.LocalPlayer.PlayerGui.Main.Skills[v.Name]:FindFirstChild("X").Cooldown.AbsoluteSize.X <= 0 and getgenv().Setting.Fruit.X.Enable then	
-                                            down("X",getgenv().Setting.Fruit.X.HoldTime)
-                                        elseif game.Players.LocalPlayer.PlayerGui.Main.Skills[v.Name]:FindFirstChild("C").Cooldown.AbsoluteSize.X <= 0 and getgenv().Setting.Fruit.C.Enable then	
-                                            down("C",getgenv().Setting.Fruit.C.HoldTime)
-                                        elseif game.Players.LocalPlayer.PlayerGui.Main.Skills[v.Name]:FindFirstChild("V").Cooldown.AbsoluteSize.X <= 0 and getgenv().Setting.Fruit.V.Enable then	
-                                            down("V",getgenv().Setting.Fruit.V.HoldTime)
-                                        elseif game.Players.LocalPlayer.PlayerGui.Main.Skills[v.Name]:FindFirstChild("F").Cooldown.AbsoluteSize.X <= 0 and getgenv().Setting.Fruit.F.Enable then	
-                                            down("F",getgenv().Setting.Fruit.F.HoldTime)
-                                        else
-                                            Click()
-                                        end
-                                    end
-                                end
-                            end
-                        else
-                            if getgenv().Setting.Melee.Enable then
-                                if getgenv().Setting.Melee.Z.Enable then	
-                                    down("Z",getgenv().Setting.Melee.Z.HoldTime)
-                                elseif  getgenv().Setting.Melee.X.Enable then	
-                                    down("X",getgenv().Setting.Melee.X.HoldTime)
-                                elseif getgenv().Setting.Melee.C.Enable then	
-                                    down("C",getgenv().Setting.Melee.C.HoldTime)
-                                elseif getgenv().Setting.Melee.V.Enable then	
-                                    down("V",getgenv().Setting.Melee.V.HoldTime)
-                                end
-                            end
-                            Click()
-                        end
-                        for i, v in pairs(game.Players.LocalPlayer.PlayerGui.Notifications:GetChildren()) do 
-                            local gay = v:GetChildren() 
-                            if v:IsA("TextLabel") and string.find(string.lower(v.Text), "player") then 
-                                SkipPlayer()
-                                v:Destroy()
-                            end
-                        end
-                    end)
-                end
-            end
-        end)
+function n4(g1)
+    if not og1 then
+        return Vector3.new(0, 0, 0)
     end
-end)
-local a,b
-local Nguvc = 5
+    checking = (g1 - og1)
+    if checking == Vector3.new(0, 0, 0) then
+        return Vector3.new(0, 0, -4)
+    else
+        return (g1 - og1)*((g1-og1).Magnitude + 5)
+    end
+end
+function shitpredict(plr)
+    if not plr then
+        return Vector3.new(0, 0, 0)
+    end
+    ai1 = n4(plr.Character.Head.Position)
+    og1 = plr.Character.Head.Position
+    return ai1
+end
 spawn(function()
-    while task.wait() do
-        if getgenv().targ == nil then target() end
-        if getgenv().targ == nil then hopserver = true end 
-        pcall(function()
-            if getgenv().targ.Character:FindFirstChild("HumanoidRootPart") and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
-                if game.Players.LocalPlayer.Character:FindFirstChild("Humanoid").Health > getgenv().Setting.SafeHealth.Health then
-                    pcall(function()    
+    while task.wait(0.05) do
+        if _G.StartHunt then
+            if getgenv().targ == nil then target() end
+            if getgenv().targ == nil then hopserver = true end 
+            pcall(function()
+                if getgenv().targ.Character:FindFirstChild("HumanoidRootPart") and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+                    if game.Players.LocalPlayer.Character:FindFirstChild("Humanoid").Health > (game.Players.LocalPlayer.Character:FindFirstChild("Humanoid").MaxHealth * (_G.SafeHealth/100)) then
+                        stopbypass = false  
                         if not (game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 1") and getgenv().targ:DistanceFromCharacter(game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 1").Position) < 10000) then
-                            if (getgenv().targ.Character:WaitForChild("HumanoidRootPart").CFrame.Position - game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart").CFrame.Position).Magnitude < 40 then 
-                                if game:GetService("Players").LocalPlayer.PlayerGui.Main.SafeZone.Visible == true then
-                                    print("Safe Zone")
-                                    SkipPlayer()
-                                end
+                            if (getgenv().targ.Character:WaitForChild("HumanoidRootPart").CFrame.Position - game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart").CFrame.Position).Magnitude < 60 then 
+                                nguvl = CFrame.new(getgenv().targ.Character.HumanoidRootPart.Position + shitpredict(getgenv().targ))
                                 if getgenv().targ.Character.Humanoid.Health > 0 then
-                                    if getgenv().Setting.Click.AlwaysClick then
+                                    if _G.AlwaysClick then
                                         Click()
                                     end
-                                    if helloae then
-                                        nguvl = getgenv().targ.Character.HumanoidRootPart.CFrame*CFrame.new(0,yTween,Nguvc)
-                                        to(nguvl*CFrame.new(getgenv().targ.Character.HumanoidRootPart.Position.Unit))
+                                    if getgenv().targ.Character.Busy.Value then
+                                        if helloae then
+                                            to(getNextPosition(nguvl))
+                                        else
+                                            to(nguvl)
+                                        end
                                     else
-                                        nguvl = getgenv().targ.Character.HumanoidRootPart.CFrame*CFrame.new(0,5,5)
-                                        to(nguvl)
+                                        if helloae then
+                                            to(nguvl*CFrame.new(getgenv().targ.Character.HumanoidRootPart.Position.Unit))
+                                        else
+                                            to(nguvl)
+                                        end
                                     end
                                 else 
-                                    print("Player Died")
                                     SkipPlayer()
+                                    Notify("Player Died")
                                 end
                             else
                                 if getgenv().targ.Character.Humanoid.Health > 0 then
-                                    to(getgenv().targ.Character.HumanoidRootPart.CFrame*CFrame.new(0,10,0))
+                                    to(getgenv().targ.Character.HumanoidRootPart.CFrame*CFrame.new(0,10,10))
                                 else
-                                    print("Player Died")
                                     SkipPlayer()
+                                    Notify("Player Died")
                                 end
                             end
                         else
-                            print("Raid")
                             SkipPlayer()
+                            Notify("Player in Raid")
                         end
-                    end)
-                    a = getgenv().targ.Character.HumanoidRootPart.Position
-                    if a ~= b then
-                        yTween = 0
-                        b = a
-                        if (getgenv().Setting.Gun.Enable and getgenv().Setting.Gun.GunMode) then
-                            Nguvc = -14
+                        if getgenv().targ.Character.HumanoidRootPart.CFrame.Y >= 10 then
+                            helloae = true
                         else
-                            Nguvc = -15
+                            helloae = false
                         end
                     else
-                        yTween = 5
-                        if (getgenv().Setting.Gun.Enable and getgenv().Setting.Gun.GunMode) then
-                            Nguvc = 3
-                        else
-                            Nguvc = 5
-                        end
+                        stopbypass = true
+                        to(getgenv().targ.Character.HumanoidRootPart.CFrame*CFrame.new(0,math.random(5000,100000),0))
                     end
-                    if getgenv().targ.Character.HumanoidRootPart.CFrame.Y >= 10 then
-                        helloae = true
-                    else
-                        helloae = false
-                    end
-                else
-                    safehealth = true
-                    to(getgenv().targ.Character.HumanoidRootPart.CFrame*CFrame.new(0,math.random(5000,100000),0))
                 end
+            end)
+        end
+    end
+end)
+function GetTimeCheck(startTime)
+    local elapsedTime = tick() - startTime
+    local minutes = math.floor((elapsedTime % 3600) / 60)
+    return minutes
+end
+spawn(function()
+    while task.wait() do 
+        if _G.StartHunt and getgenv().targ ~= nil then 
+            getgenv().incheck = getgenv().targ
+            checktime = tick()
+            repeat task.wait()
+            until (getgenv().incheck ~= getgenv().targ) or tonumber(GetTimeCheck(checktime)) == 2
+            if getgenv().incheck == getgenv().targ then 
+                SkipPlayer()
+                Notify("Player Died")
             end
-        end)
+        end
     end
 end)
 --- Aim
 spawn(function()
     while task.wait() do 
-        if getgenv().targ ~= nil and (getgenv().targ.Character:WaitForChild("HumanoidRootPart").CFrame.Position - game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart").CFrame.Position).Magnitude < 40 then 
+        if _G.StartHunt and getgenv().targ ~= nil and (getgenv().targ.Character:WaitForChild("HumanoidRootPart").CFrame.Position - game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart").CFrame.Position).Magnitude < 40 then 
             aim = true 
-            if (getgenv().Setting.Gun.Enable and getgenv().Setting.Gun.GunMode) then
+            if _G.UseGun and _G.UseGunMethod then
                 CFrameHunt = CFrame.new(getgenv().targ.Character.HumanoidRootPart.Position + getgenv().targ.Character.HumanoidRootPart.CFrame.LookVector * 2, getgenv().targ.Character.HumanoidRootPart.Position)
             else
-                CFrameHunt = CFrame.new(getgenv().targ.Character.HumanoidRootPart.Position + getgenv().targ.Character.HumanoidRootPart.CFrame.LookVector * 5, getgenv().targ.Character.HumanoidRootPart.Position)
+                CFrameHunt = CFrame.new(getgenv().targ.Character.HumanoidRootPart.Position + getgenv().targ.Character.HumanoidRootPart.CFrame.LookVector * 4, getgenv().targ.Character.HumanoidRootPart.Position)
             end
         else
             aim = false
@@ -855,7 +1470,7 @@ Mouse.Button1Down:Connect(function()
 end)
 spawn(function()
     while task.wait() do
-        if getgenv().Setting.Another.LockCamera then
+        if _G.LockCam and _G.StartHunt then
             local targetPlayer = getgenv().targ
             if targetPlayer ~= nil then
                 local targetCharacter = targetPlayer.Character
@@ -873,62 +1488,85 @@ end)
 --  Rejoin
 game:GetService("CoreGui").RobloxPromptGui.promptOverlay.ChildAdded:Connect(function(child)
     if not hopserver and child.Name == 'ErrorPrompt' and child:FindFirstChild('MessageArea') and child.MessageArea:FindFirstChild("ErrorFrame") then
-        print("Apple Hub | Rejoin!")
         game:GetService("TeleportService"):Teleport(game.PlaceId)
+        Notify("Apple Hub | Rejoin from kicked!")
     end
 end)
 --- Webhook
-Urlsent = getgenv().Setting.Hunt.Url
 function wSend(main)
     spawn(function()
         local Data = game:GetService("HttpService"):JSONEncode(main)
         local Head = {["content-type"] = "application/json"}
         Send = http_request or request or HttpPost or syn.request 
-        if true then 
-            Send({Url = Urlsent, Body = Data, Method = "POST", Headers = Head})
-        end
+        Send({Url = _G.WebhookUrl, Body = Data, Method = "POST", Headers = Head})
     end)
 end 
+function wTest() 
+    local data = {
+        ["content"] = "",
+        ["embeds"] = {
+            {
+                ["title"] = "**Apple Hub | Auto Bounty**",
+                ["color"] = 0000000,
+                ["fields"] = {
+                    {
+                        ["name"] = "Test Webhook",
+                        ["value"] = "Apple Hub Webhook Test :eyes:",
+                        ["inline"] = false,
+                    },
+                },
+                ["thumbnail"] = {
+                    ["url"] = "https://cdn.discordapp.com/attachments/1184024538065944626/1185194585874513970/20231212_231304.png?ex=658eb979&is=657c4479&hm=8481be1090b5e3322d54395dc7836139faccd3d883005d0f756aa9472468e39b&",
+                },
+                ["footer"] = {
+                    ["text"] = "Apple Hub - https://discord.gg/JNAB9UDvCx",
+                },
+                ["timestamp"] = os.date("!%Y-%m-%dT%H:%M:%SZ"),
+            }
+        }
+    }
+    wSend(data)
+end
 function wEarn(targ, earn,total) 
-    if getgenv().Setting.Hunt.Webhook and getgenv().killed ~= nil then
+    if _G.UseWebhook and targ ~= nil then
         local data = {
             ["content"] = "",
             ["embeds"] = {
                 {
                     ["title"] = "**Apple Hub | Auto Bounty**",
-                    ["color"] = 00000,
+                    ["color"] = 0x58b9ff,
                     ["fields"] = {
                         {
                             ["name"] = "Account: ",
                             ["value"] = "||"..game.Players.LocalPlayer.Name.."||",
-                            ["inline"] = false,
+                            ["inline"] = true,
                         },
                         {
                             ["name"] = "Target: ",
                             ["value"] = "```"..targ.Name.."```",
-                            ["inline"] = false,
+                            ["inline"] = true,
                         },
                         {
                             ["name"] = "Server Bounty Count: ",
                             ["value"] = "```Earned: "..earn.."```",
-                            ["inline"] = false,
+                            ["inline"] = true,
                         },
                         {
                             ["name"] = "Account Total: ",
                             ["value"] = "```Earned: "..total.."```",
-                            ["inline"] = false,
+                            ["inline"] = true,
                         },
                         {
                             ["name"] = "Current Bounty: ",
                             ["value"] = "```"..(math.round((game.Players.LocalPlayer.leaderstats["Bounty/Honor"].Value / 1000000)*100)/100).."M```",
-                            ["inline"] = false,
+                            ["inline"] = true,
                         }
                     },
                     ["thumbnail"] = {
-                        ["url"] = "",
+                        ["url"] = "https://cdn.discordapp.com/attachments/1184024538065944626/1185194585874513970/20231212_231304.png?ex=658eb979&is=657c4479&hm=8481be1090b5e3322d54395dc7836139faccd3d883005d0f756aa9472468e39b&",
                     },
                     ["footer"] = {
-                        ["text"] = "",
+                        ["text"] = "Apple Hub - https://discord.gg/JNAB9UDvCx",
                     },
                     ["timestamp"] = os.date("!%Y-%m-%dT%H:%M:%SZ"),
                 }
@@ -938,436 +1576,6 @@ function wEarn(targ, earn,total)
     end
 end
 --- Counter
---- Load & Save Setting
-local foldername = "Apple Hub Auto Bounty"
-local filename = foldername.."/Settings.json"
-function saveSettings()
-    local HttpService = game:GetService("HttpService")
-    local json = HttpService:JSONEncode(_G)
-    if true then
-        if isfolder(foldername) then
-            if isfile(filename) then
-                writefile(filename, json)
-            else
-                writefile(filename, json)
-            end
-        else
-            makefolder(foldername)
-        end
-    end
-end
-function loadSettings()
-    local HttpService = game:GetService("HttpService")
-    if isfolder(foldername) then
-        if isfile(filename) then
-            _G = HttpService:JSONDecode(readfile(filename))
-        end
-    end
-end
---- Gui
-RimusScreen = Instance.new("ScreenGui");
-DropShadowHolder = Instance.new("Frame");
-DropShadow = Instance.new("ImageLabel");
-Main = Instance.new("Frame");
-UICorner = Instance.new("UICorner");
-Layers = Instance.new("Frame");
-UICorner1 = Instance.new("UICorner");
-RealLayer = Instance.new("Frame");
-UIListLayout = Instance.new("UIListLayout");
-EarnedFrame = Instance.new("Frame");
-UICorner2 = Instance.new("UICorner");
-EarnedText = Instance.new("TextLabel");
-EarnedNumber = Instance.new("TextLabel");
-TimeEslapedFrame = Instance.new("Frame");
-UICorner3 = Instance.new("UICorner");
-EslapedText = Instance.new("TextLabel");
-EslapedNumber = Instance.new("TextLabel");
-TotalEarnedFrame = Instance.new("Frame");
-UICorner4 = Instance.new("UICorner");
-TotalEarnedText = Instance.new("TextLabel");
-TotalEarnedNumber = Instance.new("TextLabel");
-CurrentBountyFrame = Instance.new("Frame");
-UICorner5 = Instance.new("UICorner");
-CurrentBountyText = Instance.new("TextLabel");
-CurrentBountyNumber = Instance.new("TextLabel");
-SkipDisFrame = Instance.new("Frame");
-UICorner6 = Instance.new("UICorner");
-SkipFrame = Instance.new("Frame");
-UICorner7 = Instance.new("UICorner");
-SkipButton = Instance.new("TextButton");
-DisFrame = Instance.new("Frame");
-UICorner8 = Instance.new("UICorner");
-DisButton = Instance.new("TextButton");
-Top = Instance.new("Frame");
-UICorner9 = Instance.new("UICorner");
-ImageHub = Instance.new("ImageLabel");
-Ver = Instance.new("TextLabel");
-NameHub = Instance.new("TextLabel");
-
-RimusScreen.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-RimusScreen.Name = "RimusScreen"
-RimusScreen.Parent = game:GetService("CoreGui")
-
-DropShadowHolder.AnchorPoint = Vector2.new(0.5, 0.5)
-DropShadowHolder.BackgroundTransparency = 1
-DropShadowHolder.BorderSizePixel = 0
-DropShadowHolder.Position = UDim2.new(0.5, 0, 0.5, 0)
-DropShadowHolder.Size = UDim2.new(0, 336, 0, 258)
-DropShadowHolder.ZIndex = 0
-DropShadowHolder.Name = "DropShadowHolder"
-DropShadowHolder.Parent = RimusScreen
-
-DropShadow.Image = "rbxassetid://6015897843"
-DropShadow.ImageColor3 = Color3.fromRGB(131.00000739097595, 181.0000044107437, 255)
-DropShadow.ImageTransparency = 0.5
-DropShadow.ScaleType = Enum.ScaleType.Slice
-DropShadow.SliceCenter = Rect.new(49, 49, 450, 450)
-DropShadow.AnchorPoint = Vector2.new(0.5, 0.5)
-DropShadow.BackgroundTransparency = 1
-DropShadow.BorderSizePixel = 0
-DropShadow.Position = UDim2.new(0.5, 0, 0.5, 0)
-DropShadow.Size = UDim2.new(1, 47, 1, 47)
-DropShadow.ZIndex = 0
-DropShadow.Name = "DropShadow"
-DropShadow.Parent = DropShadowHolder
-
-Main.AnchorPoint = Vector2.new(0.5, 0.5)
-Main.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-Main.BackgroundTransparency = 0.10000000149011612
-Main.BorderColor3 = Color3.fromRGB(0, 0, 0)
-Main.BorderSizePixel = 0
-Main.Position = UDim2.new(0.5, 0, 0.5, 0)
-Main.Size = UDim2.new(0, 336, 0, 258)
-Main.Name = "Main"
-Main.Parent = DropShadow
-
-UICorner.CornerRadius = UDim.new(0, 2)
-UICorner.Parent = Main
-
-Layers.AnchorPoint = Vector2.new(0.5, 0.5)
-Layers.BackgroundColor3 = Color3.fromRGB(131.00000739097595, 181.0000044107437, 255)
-Layers.BackgroundTransparency = 0.8999999761581421
-Layers.BorderColor3 = Color3.fromRGB(0, 0, 0)
-Layers.BorderSizePixel = 0
-Layers.Position = UDim2.new(0.499404728, 0, 0.62465781, 0)
-Layers.Size = UDim2.new(0, 324, 0, 182)
-Layers.Name = "Layers"
-Layers.Parent = Main
-
-UICorner1.CornerRadius = UDim.new(0, 1)
-UICorner1.Parent = Layers
-
-RealLayer.AnchorPoint = Vector2.new(0.5, 0.5)
-RealLayer.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-RealLayer.BackgroundTransparency = 0.9900000095367432
-RealLayer.BorderColor3 = Color3.fromRGB(0, 0, 0)
-RealLayer.BorderSizePixel = 0
-RealLayer.Position = UDim2.new(0.500385821, 0, 0.495769292, 0)
-RealLayer.Size = UDim2.new(0, 312, 0, 169)
-RealLayer.Name = "RealLayer"
-RealLayer.Parent = Layers
-
-UIListLayout.Padding = UDim.new(0, 2)
-UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
-UIListLayout.Parent = RealLayer
-
-EarnedFrame.AnchorPoint = Vector2.new(0.5, 0)
-EarnedFrame.BackgroundColor3 = Color3.fromRGB(230.00000149011612, 230.00000149011612, 230.00000149011612)
-EarnedFrame.BackgroundTransparency = 0.8999999761581421
-EarnedFrame.BorderColor3 = Color3.fromRGB(0, 0, 0)
-EarnedFrame.BorderSizePixel = 0
-EarnedFrame.Position = UDim2.new(0.5, 0, 0, 0)
-EarnedFrame.Size = UDim2.new(0, 312, 0, 30)
-EarnedFrame.Name = "EarnedFrame"
-EarnedFrame.Parent = RealLayer
-
-UICorner2.CornerRadius = UDim.new(0, 1)
-UICorner2.Parent = EarnedFrame
-
-EarnedText.Font = Enum.Font.GothamBold
-EarnedText.Text = "Earned:"
-EarnedText.TextColor3 = Color3.fromRGB(230.00000149011612, 230.00000149011612, 230.00000149011612)
-EarnedText.TextSize = 16
-EarnedText.TextXAlignment = Enum.TextXAlignment.Left
-EarnedText.AnchorPoint = Vector2.new(0, 0.5)
-EarnedText.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-EarnedText.BackgroundTransparency = 0.9900000095367432
-EarnedText.BorderColor3 = Color3.fromRGB(0, 0, 0)
-EarnedText.BorderSizePixel = 0
-EarnedText.Position = UDim2.new(0.0204153825, 0, 0.5, 0)
-EarnedText.Size = UDim2.new(0, 94, 0, 12)
-EarnedText.Name = "EarnedText"
-EarnedText.Parent = EarnedFrame
-
-EarnedNumber.Font = Enum.Font.GothamBold
-EarnedNumber.Text = "0"
-EarnedNumber.TextColor3 = Color3.fromRGB(230.00000149011612, 230.00000149011612, 230.00000149011612)
-EarnedNumber.TextSize = 16
-EarnedNumber.TextTransparency = 0.10000000149011612
-EarnedNumber.TextXAlignment = Enum.TextXAlignment.Right
-EarnedNumber.AnchorPoint = Vector2.new(0, 0.5)
-EarnedNumber.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-EarnedNumber.BackgroundTransparency = 0.9900000095367432
-EarnedNumber.BorderColor3 = Color3.fromRGB(0, 0, 0)
-EarnedNumber.BorderSizePixel = 0
-EarnedNumber.Position = UDim2.new(0.578738093, 0, 0.5, 0)
-EarnedNumber.Size = UDim2.new(0, 123, 0, 12)
-EarnedNumber.Name = "EarnedNumber"
-EarnedNumber.Parent = EarnedFrame
-
-TimeEslapedFrame.AnchorPoint = Vector2.new(0.5, 0)
-TimeEslapedFrame.BackgroundColor3 = Color3.fromRGB(230.00000149011612, 230.00000149011612, 230.00000149011612)
-TimeEslapedFrame.BackgroundTransparency = 0.8999999761581421
-TimeEslapedFrame.BorderColor3 = Color3.fromRGB(0, 0, 0)
-TimeEslapedFrame.BorderSizePixel = 0
-TimeEslapedFrame.Position = UDim2.new(0.5, 0, 0, 0)
-TimeEslapedFrame.Size = UDim2.new(0, 312, 0, 30)
-TimeEslapedFrame.Name = "TimeEslapedFrame"
-TimeEslapedFrame.Parent = RealLayer
-
-UICorner3.CornerRadius = UDim.new(0, 1)
-UICorner3.Parent = TimeEslapedFrame
-
-EslapedText.Font = Enum.Font.GothamBold
-EslapedText.Text = "Time Eslaped:"
-EslapedText.TextColor3 = Color3.fromRGB(230.00000149011612, 230.00000149011612, 230.00000149011612)
-EslapedText.TextSize = 16
-EslapedText.TextXAlignment = Enum.TextXAlignment.Left
-EslapedText.AnchorPoint = Vector2.new(0, 0.5)
-EslapedText.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-EslapedText.BackgroundTransparency = 0.9900000095367432
-EslapedText.BorderColor3 = Color3.fromRGB(0, 0, 0)
-EslapedText.BorderSizePixel = 0
-EslapedText.Position = UDim2.new(0.0204153825, 0, 0.5, 0)
-EslapedText.Size = UDim2.new(0, 94, 0, 12)
-EslapedText.Name = "EslapedText"
-EslapedText.Parent = TimeEslapedFrame
-
-EslapedNumber.Font = Enum.Font.GothamBold
-EslapedNumber.Text = "00:00"
-EslapedNumber.TextColor3 = Color3.fromRGB(230.00000149011612, 230.00000149011612, 230.00000149011612)
-EslapedNumber.TextSize = 16
-EslapedNumber.TextTransparency = 0.10000000149011612
-EslapedNumber.TextXAlignment = Enum.TextXAlignment.Right
-EslapedNumber.AnchorPoint = Vector2.new(0, 0.5)
-EslapedNumber.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-EslapedNumber.BackgroundTransparency = 0.9900000095367432
-EslapedNumber.BorderColor3 = Color3.fromRGB(0, 0, 0)
-EslapedNumber.BorderSizePixel = 0
-EslapedNumber.Position = UDim2.new(0.578738093, 0, 0.5, 0)
-EslapedNumber.Size = UDim2.new(0, 123, 0, 12)
-EslapedNumber.Name = "EslapedNumber"
-EslapedNumber.Parent = TimeEslapedFrame
-
-TotalEarnedFrame.AnchorPoint = Vector2.new(0.5, 0)
-TotalEarnedFrame.BackgroundColor3 = Color3.fromRGB(230.00000149011612, 230.00000149011612, 230.00000149011612)
-TotalEarnedFrame.BackgroundTransparency = 0.8999999761581421
-TotalEarnedFrame.BorderColor3 = Color3.fromRGB(0, 0, 0)
-TotalEarnedFrame.BorderSizePixel = 0
-TotalEarnedFrame.Position = UDim2.new(0.5, 0, 0, 0)
-TotalEarnedFrame.Size = UDim2.new(0, 312, 0, 30)
-TotalEarnedFrame.Name = "TotalEarnedFrame"
-TotalEarnedFrame.Parent = RealLayer
-
-UICorner4.CornerRadius = UDim.new(0, 1)
-UICorner4.Parent = TotalEarnedFrame
-
-TotalEarnedText.Font = Enum.Font.GothamBold
-TotalEarnedText.Text = "Total Earned:"
-TotalEarnedText.TextColor3 = Color3.fromRGB(230.00000149011612, 230.00000149011612, 230.00000149011612)
-TotalEarnedText.TextSize = 16
-TotalEarnedText.TextXAlignment = Enum.TextXAlignment.Left
-TotalEarnedText.AnchorPoint = Vector2.new(0, 0.5)
-TotalEarnedText.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-TotalEarnedText.BackgroundTransparency = 0.9900000095367432
-TotalEarnedText.BorderColor3 = Color3.fromRGB(0, 0, 0)
-TotalEarnedText.BorderSizePixel = 0
-TotalEarnedText.Position = UDim2.new(0.0204153825, 0, 0.5, 0)
-TotalEarnedText.Size = UDim2.new(0, 94, 0, 12)
-TotalEarnedText.Name = "TotalEarnedText"
-TotalEarnedText.Parent = TotalEarnedFrame
-
-TotalEarnedNumber.Font = Enum.Font.GothamBold
-TotalEarnedNumber.Text = "0"
-TotalEarnedNumber.TextColor3 = Color3.fromRGB(230.00000149011612, 230.00000149011612, 230.00000149011612)
-TotalEarnedNumber.TextSize = 16
-TotalEarnedNumber.TextTransparency = 0.10000000149011612
-TotalEarnedNumber.TextXAlignment = Enum.TextXAlignment.Right
-TotalEarnedNumber.AnchorPoint = Vector2.new(0, 0.5)
-TotalEarnedNumber.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-TotalEarnedNumber.BackgroundTransparency = 0.9900000095367432
-TotalEarnedNumber.BorderColor3 = Color3.fromRGB(0, 0, 0)
-TotalEarnedNumber.BorderSizePixel = 0
-TotalEarnedNumber.Position = UDim2.new(0.578738093, 0, 0.5, 0)
-TotalEarnedNumber.Size = UDim2.new(0, 123, 0, 12)
-TotalEarnedNumber.Name = "TotalEarnedNumber"
-TotalEarnedNumber.Parent = TotalEarnedFrame
-
-CurrentBountyFrame.AnchorPoint = Vector2.new(0.5, 0)
-CurrentBountyFrame.BackgroundColor3 = Color3.fromRGB(230.00000149011612, 230.00000149011612, 230.00000149011612)
-CurrentBountyFrame.BackgroundTransparency = 0.8999999761581421
-CurrentBountyFrame.BorderColor3 = Color3.fromRGB(0, 0, 0)
-CurrentBountyFrame.BorderSizePixel = 0
-CurrentBountyFrame.Position = UDim2.new(0.5, 0, 0, 0)
-CurrentBountyFrame.Size = UDim2.new(0, 312, 0, 30)
-CurrentBountyFrame.Name = "CurrentBountyFrame"
-CurrentBountyFrame.Parent = RealLayer
-
-UICorner5.CornerRadius = UDim.new(0, 1)
-UICorner5.Parent = CurrentBountyFrame
-
-CurrentBountyText.Font = Enum.Font.GothamBold
-CurrentBountyText.Text = "Current Bounty:"
-CurrentBountyText.TextColor3 = Color3.fromRGB(230.00000149011612, 230.00000149011612, 230.00000149011612)
-CurrentBountyText.TextSize = 16
-CurrentBountyText.TextXAlignment = Enum.TextXAlignment.Left
-CurrentBountyText.AnchorPoint = Vector2.new(0, 0.5)
-CurrentBountyText.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-CurrentBountyText.BackgroundTransparency = 0.9900000095367432
-CurrentBountyText.BorderColor3 = Color3.fromRGB(0, 0, 0)
-CurrentBountyText.BorderSizePixel = 0
-CurrentBountyText.Position = UDim2.new(0.0204153825, 0, 0.5, 0)
-CurrentBountyText.Size = UDim2.new(0, 94, 0, 12)
-CurrentBountyText.Name = "CurrentBountyText"
-CurrentBountyText.Parent = CurrentBountyFrame
-
-CurrentBountyNumber.Font = Enum.Font.GothamBold
-CurrentBountyNumber.Text = "0"
-CurrentBountyNumber.TextColor3 = Color3.fromRGB(230.00000149011612, 230.00000149011612, 230.00000149011612)
-CurrentBountyNumber.TextSize = 16
-CurrentBountyNumber.TextTransparency = 0.10000000149011612
-CurrentBountyNumber.TextXAlignment = Enum.TextXAlignment.Right
-CurrentBountyNumber.AnchorPoint = Vector2.new(0, 0.5)
-CurrentBountyNumber.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-CurrentBountyNumber.BackgroundTransparency = 0.9900000095367432
-CurrentBountyNumber.BorderColor3 = Color3.fromRGB(0, 0, 0)
-CurrentBountyNumber.BorderSizePixel = 0
-CurrentBountyNumber.Position = UDim2.new(0.578738093, 0, 0.5, 0)
-CurrentBountyNumber.Size = UDim2.new(0, 123, 0, 12)
-CurrentBountyNumber.Name = "CurrentBountyNumber"
-CurrentBountyNumber.Parent = CurrentBountyFrame
-
-SkipDisFrame.AnchorPoint = Vector2.new(0.5, 0)
-SkipDisFrame.BackgroundColor3 = Color3.fromRGB(230.00000149011612, 230.00000149011612, 230.00000149011612)
-SkipDisFrame.BackgroundTransparency = 0.8999999761581421
-SkipDisFrame.BorderColor3 = Color3.fromRGB(0, 0, 0)
-SkipDisFrame.BorderSizePixel = 0
-SkipDisFrame.Position = UDim2.new(0.5, 0, 0.75739646, 0)
-SkipDisFrame.Size = UDim2.new(0, 312, 0, 41)
-SkipDisFrame.Name = "SkipDisFrame"
-SkipDisFrame.Parent = RealLayer
-
-UICorner6.CornerRadius = UDim.new(0, 1)
-UICorner6.Parent = SkipDisFrame
-
-SkipFrame.AnchorPoint = Vector2.new(0.5, 0.5)
-SkipFrame.BackgroundColor3 = Color3.fromRGB(230.00000149011612, 230.00000149011612, 230.00000149011612)
-SkipFrame.BackgroundTransparency = 0.8999999761581421
-SkipFrame.BorderColor3 = Color3.fromRGB(0, 0, 0)
-SkipFrame.BorderSizePixel = 0
-SkipFrame.Position = UDim2.new(0.253205121, 0, 0.5, 0)
-SkipFrame.Size = UDim2.new(0, 150, 0, 32)
-SkipFrame.Name = "SkipFrame"
-SkipFrame.Parent = SkipDisFrame
-
-UICorner7.CornerRadius = UDim.new(0, 1)
-UICorner7.Parent = SkipFrame
-
-SkipButton.Font = Enum.Font.GothamBold
-SkipButton.Text = "Skip Player"
-SkipButton.TextColor3 = Color3.fromRGB(230.00000149011612, 230.00000149011612, 230.00000149011612)
-SkipButton.TextSize = 16
-SkipButton.TextStrokeColor3 = Color3.fromRGB(255, 255, 255)
-SkipButton.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-SkipButton.BackgroundTransparency = 0.9900000095367432
-SkipButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
-SkipButton.BorderSizePixel = 0
-SkipButton.Size = UDim2.new(0, 150, 0, 32)
-SkipButton.Name = "SkipButton"
-SkipButton.Parent = SkipFrame
-
-DisFrame.AnchorPoint = Vector2.new(0.5, 0.5)
-DisFrame.BackgroundColor3 = Color3.fromRGB(230.00000149011612, 230.00000149011612, 230.00000149011612)
-DisFrame.BackgroundTransparency = 0.8999999761581421
-DisFrame.BorderColor3 = Color3.fromRGB(0, 0, 0)
-DisFrame.BorderSizePixel = 0
-DisFrame.Position = UDim2.new(0.745192289, 0, 0.5, 0)
-DisFrame.Size = UDim2.new(0, 150, 0, 32)
-DisFrame.Name = "DisFrame"
-DisFrame.Parent = SkipDisFrame
-
-UICorner8.CornerRadius = UDim.new(0, 1)
-UICorner8.Parent = DisFrame
-
-DisButton.Font = Enum.Font.GothamBold
-DisButton.Text = "Copy Link Discord"
-DisButton.TextColor3 = Color3.fromRGB(230.00000149011612, 230.00000149011612, 230.00000149011612)
-DisButton.TextSize = 16
-DisButton.TextStrokeColor3 = Color3.fromRGB(255, 255, 255)
-DisButton.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-DisButton.BackgroundTransparency = 0.9900000095367432
-DisButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
-DisButton.BorderSizePixel = 0
-DisButton.Size = UDim2.new(0, 150, 0, 32)
-DisButton.Name = "DisButton"
-DisButton.Parent = DisFrame
-
-Top.AnchorPoint = Vector2.new(0.5, 0.5)
-Top.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-Top.BackgroundTransparency = 0.9900000095367432
-Top.BorderColor3 = Color3.fromRGB(0, 0, 0)
-Top.BorderSizePixel = 0
-Top.Position = UDim2.new(0.500237703, 0, 0.132554695, 0)
-Top.Size = UDim2.new(0, 335, 0, 68)
-Top.Name = "Top"
-Top.Parent = Main
-
-UICorner9.CornerRadius = UDim.new(0, 2)
-UICorner9.Parent = Top
-
-ImageHub.Image = "rbxassetid://15184124237"
-ImageHub.AnchorPoint = Vector2.new(0, 0.5)
-ImageHub.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-ImageHub.BackgroundTransparency = 0.9900000095367432
-ImageHub.BorderColor3 = Color3.fromRGB(0, 0, 0)
-ImageHub.BorderSizePixel = 0
-ImageHub.Position = UDim2.new(0.00999999978, 0, 0.550000012, 0)
-ImageHub.Size = UDim2.new(0, 65, 0, 65)
-ImageHub.Name = "ImageHub"
-ImageHub.Parent = Top
-
-Ver.Font = Enum.Font.GothamBold
-Ver.Text = "Version: Auto Bounty"
-Ver.TextColor3 = Color3.fromRGB(131.00000739097595, 181.0000044107437, 255)
-Ver.TextSize = 17
-Ver.TextTransparency = 0.10000000149011612
-Ver.TextXAlignment = Enum.TextXAlignment.Left
-Ver.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-Ver.BackgroundTransparency = 1
-Ver.BorderColor3 = Color3.fromRGB(0, 0, 0)
-Ver.BorderSizePixel = 0
-Ver.Position = UDim2.new(0.223913297, 0, 0.601351321, 0)
-Ver.Size = UDim2.new(0, 217, 0, 18)
-Ver.Name = "Ver"
-Ver.Parent = Top
-
-NameHub.Font = Enum.Font.GothamBold
-NameHub.Text = "Rimus Hub | Blox Fruits"
-NameHub.TextColor3 = Color3.fromRGB(230.00000149011612, 230.00000149011612, 230.00000149011612)
-NameHub.TextSize = 23
-NameHub.TextXAlignment = Enum.TextXAlignment.Left
-NameHub.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-NameHub.BackgroundTransparency = 1
-NameHub.BorderColor3 = Color3.fromRGB(0, 0, 0)
-NameHub.BorderSizePixel = 0
-NameHub.Position = UDim2.new(0.223913297, 0, 0.217029572, 0)
-NameHub.Size = UDim2.new(0, 246, 0, 20)
-NameHub.Name = "NameHub"
-NameHub.Parent = Top
---- Gui Function
-_G.TotalEarn = 0
-_G.Time = 0
-loadSettings()
 Bounty = game:GetService("Players").LocalPlayer.leaderstats["Bounty/Honor"].value
 Earned = game:GetService("Players").LocalPlayer.leaderstats["Bounty/Honor"].value - Bounty
 Earned2 = game:GetService("Players").LocalPlayer.leaderstats["Bounty/Honor"].value - Bounty
@@ -1383,104 +1591,31 @@ function GetElapsedTime(startTime)
     local formattedTime = string.format("%02d:%02d:%02d", hours, minutes, seconds)
     return formattedTime
 end
-local UserInputService = game:GetService("UserInputService")
-local UserInputService = game:GetService("UserInputService")
-local VirtualInputManager = game:GetService("VirtualInputManager")
-local TweenService = game:GetService("TweenService")
-local tween = game:service"TweenService"
-local RunService = game:GetService("RunService")
-local LocalPlayer = game:GetService("Players").LocalPlayer
-local Mouse = LocalPlayer:GetMouse()
-local GuiService = game:GetService("GuiService")
-function MakeDraggable(topbarobject, object)
-    local Dragging = nil
-    local DragInput = nil
-    local DragStart = nil
-    local StartPosition = nil
-
-    local function Update(input)
-        local Delta = input.Position - DragStart
-        local pos =
-            UDim2.new(
-                StartPosition.X.Scale,
-                StartPosition.X.Offset + Delta.X,
-                StartPosition.Y.Scale,
-                StartPosition.Y.Offset + Delta.Y
-            )
-        local Tween = TweenService:Create(object, TweenInfo.new(0.2), {Position = pos})
-        Tween:Play()
-    end
-
-    topbarobject.InputBegan:Connect(
-        function(input)
-            if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
-                Dragging = true
-                DragStart = input.Position
-                StartPosition = object.Position
-
-                input.Changed:Connect(
-                    function()
-                        if input.UserInputState == Enum.UserInputState.End then
-                            Dragging = false
-                        end
-                    end
-                )
-            end
-        end
-    )
-
-    topbarobject.InputChanged:Connect(
-        function(input)
-            if
-                input.UserInputType == Enum.UserInputType.MouseMovement or
-                input.UserInputType == Enum.UserInputType.Touch
-            then
-                DragInput = input
-            end
-        end
-    )
-
-    UserInputService.InputChanged:Connect(
-        function(input)
-            if input == DragInput and Dragging then
-                Update(input)
-            end
-        end
-    )
-end
-MakeDraggable(DropShadowHolder,DropShadowHolder)
-DisButton.MouseButton1Down:Connect(function()
-    setclipboard("https://discord.gg/ugF7s4GZ53")
-end)
-SkipButton.MouseButton1Down:Connect(function()
-    SkipPlayer()
-end)
---- Time
 spawn(function()
     while task.wait() do
-        if getgenv().targ ~= nil then
-            TextLabel1.Text = getgenv().targ.Name
-        elseif getgenv().targ == nil and not hopserver then
-            TextLabel1.Text = "Finding Player"
-        elseif getgenv().targ == nil and hopserver then
-            TextLabel1.Text = "Hop Server"
+        if _G.StartHunt then
+            Earned = game:GetService("Players").LocalPlayer.leaderstats["Bounty/Honor"].value - Bounty
+            if Earned ~= Earned2 then
+                TotalEarned = OldTotalEarned + Earned
+                wait()
+                Earned2 = Earned
+                saveSettings()
+                wEarn(getgenv().killed, Earned, TotalEarned)  
+            end
+            Earn:Set((tostring(Earned)))
+            Total:Set((tostring(TotalEarned)))
+            Current:Set((tostring(game:GetService("Players").LocalPlayer.leaderstats["Bounty/Honor"].value)))
+            _G.TotalEarn = TotalEarned 
         end
-        Earned = game:GetService("Players").LocalPlayer.leaderstats["Bounty/Honor"].value - Bounty
-        if Earned ~= Earned2 then
-            TotalEarned = OldTotalEarned + Earned
-            Earned2 = Earned
-            saveSettings()
-            wEarn(getgenv().killed, Earned,TotalEarned)  
-        end
-        EarnedNumber.Text = tostring(Earned)
-        TotalEarnedNumber.Text = tostring(TotalEarned)
-        CurrentBountyNumber.Text = game:GetService("Players").LocalPlayer.leaderstats["Bounty/Honor"].value
-        _G.TotalEarn = TotalEarned 
     end
 end)
 spawn(function()
-    while task.wait(1) do
-        EslapedNumber.Text = GetElapsedTime(startTime)
-        saveSettings()
+    while task.wait() do
+        if _G.StartHunt then
+            Elapsed:Set(tostring(GetElapsedTime(startTime)))
+            saveSettings()
+            task.wait(1)
+        end
     end
 end)
+game.RunService:Set3dRenderingEnabled(not _G.WhiteScreen)
