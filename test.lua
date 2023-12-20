@@ -101,8 +101,8 @@ if workspace:FindFirstChild("AbilityThingyk1212") then
 end
 
 local Window = Fluent:CreateWindow({
-    Title = "Blade Ball - Apple Hub |",
-    SubTitle = "By Tien Tiny",
+    Title = "Blade Ball - Alchemy Hub |",
+    SubTitle = "By Alchemy",
     TabWidth = 150,
     Size = UDim2.fromOffset(580, 460),
     Acrylic = true, -- The blur may be detectable, setting this to false disables blur entirely
@@ -112,8 +112,8 @@ local Window = Fluent:CreateWindow({
 
 --Fluent provides Lucide Icons https://lucide.dev/icons/ for the tabs, icons are optional
 local Tabs = {
-    Trolling = Window:AddTab({ Title = "Fun/Troll", Icon = "" }),
     Main = Window:AddTab({ Title = "Auto Parry", Icon = "" }),
+    Trolling = Window:AddTab({ Title = "Fun/Troll", Icon = "" }),
     Abilities = Window:AddTab({ Title = "Abilities", Icon = "" }),
     Emotes = Window:AddTab({ Title = "Emotes/Animations", Icon = "" }),
     Settings = Window:AddTab({ Title = "Settings", Icon = "settings" }),
@@ -273,8 +273,8 @@ local Options = Fluent.Options
 
 do
     Fluent:Notify({
-        Title = "Blade Ball - Apple Hub",
-        Content = "Apple Hub has successfully loaded!",
+        Title = "Blade Ball - Alchemy Hub",
+        Content = "Alchemy Hub has successfully loaded!",
         SubContent = "", -- Optional
         Duration = 5 -- Set to nil to make the notification not disappear
     })
@@ -604,8 +604,8 @@ SaveManager:SetLibrary(Fluent)
 InterfaceManager:SetLibrary(Fluent)
 SaveManager:IgnoreThemeSettings()
 SaveManager:SetIgnoreIndexes({})
-InterfaceManager:SetFolder("AppleHub")
-SaveManager:SetFolder("AppleHub/bladeball")
+InterfaceManager:SetFolder("Alchemy")
+SaveManager:SetFolder("Alchemy/bladeball")
 Window:SelectTab(5)
 --InterfaceManager:BuildInterfaceSection(Tabs.Settings)
 --SaveManager:BuildConfigSection(Tabs.Settings)
@@ -912,8 +912,8 @@ SaveManager:SetIgnoreIndexes({})
 -- use case for doing it this way:
 -- a script hub could have themes in a global folder
 -- and game configs in a separate folder per game
-InterfaceManager:SetFolder("AppleHub")
-SaveManager:SetFolder("AppleHub/bladeball")
+InterfaceManager:SetFolder("Alchemy")
+SaveManager:SetFolder("Alchemy/bladeball")
 
 InterfaceManager:BuildInterfaceSection(Tabs.Settings)
 SaveManager:BuildConfigSection(Tabs.Settings)
@@ -922,7 +922,7 @@ SaveManager:BuildConfigSection(Tabs.Settings)
 Window:SelectTab(1)
 
 Fluent:Notify({
-Title = "Apple Hub",
+Title = "Alchemy Hub",
 Content = "The script has been loaded.",
 Duration = 8
 })
